@@ -11,3 +11,11 @@ spring:
     serialization:
       write-dates-as-timestamps: false
       indent_output: true
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    status-page-url-path: /info
+    health-check-url-path: /health
