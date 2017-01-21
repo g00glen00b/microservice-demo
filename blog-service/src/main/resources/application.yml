@@ -1,0 +1,13 @@
+server:
+  port: 8000
+spring:
+  application:
+    name: blog-service
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent_output: true
