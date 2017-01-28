@@ -1,0 +1,16 @@
+security:
+  password:
+    strength: 10
+  token:
+    max-age-seconds: 86400
+    secret: bkr5aI5AAtS5kbwN
+server:
+  port: 8002
+  context-path: /uaa
+spring:
+  application:
+    name: uaa-service
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
