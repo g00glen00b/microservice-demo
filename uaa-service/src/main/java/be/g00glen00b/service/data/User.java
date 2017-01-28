@@ -1,5 +1,6 @@
 package be.g00glen00b.service.data;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -10,7 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
-public class User {
+public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,7 +19,7 @@ public class User {
     private String password;
     private boolean enabled;
     @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "username")
+    @JoinColumn(name = "username", referencedColumnName = "username")
     private List<Role> roles;
 
     public User(Long id, String username, String password, boolean enabled, List<Role> roles) {
