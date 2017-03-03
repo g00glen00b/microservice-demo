@@ -1,0 +1,28 @@
+server:
+  port: 8004
+  context-path: /profile
+spring:
+  application:
+    name: profile-service
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+      indent_output: true
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    statusPageUrlPath: ${server.context-path}/info
+    healthCheckUrlPath: ${server.context-path}/health
+security:
+  token:
+    endpoint: http://uaa-service/uaa/api/user
+    header: X-Token
+management:
+  context-path: /
