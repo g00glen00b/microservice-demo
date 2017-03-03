@@ -14,3 +14,13 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    statusPageUrlPath: ${server.context-path}/info
+    healthCheckUrlPath: ${server.context-path}/health
+management:
+  context-path: /
+
