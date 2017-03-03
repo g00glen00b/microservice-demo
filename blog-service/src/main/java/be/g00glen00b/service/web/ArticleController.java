@@ -2,6 +2,8 @@ package be.g00glen00b.service.web;
 
 import be.g00glen00b.service.data.ArticleQuery;
 import be.g00glen00b.service.data.ArticleService;
+import be.g00glen00b.service.web.model.ArticleSort;
+import be.g00glen00b.service.web.model.ArticlesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

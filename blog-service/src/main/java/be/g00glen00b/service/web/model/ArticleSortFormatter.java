@@ -1,4 +1,4 @@
-package be.g00glen00b.service.web;
+package be.g00glen00b.service.web.model;
 
 import java.text.ParseException;
 import java.util.Arrays;

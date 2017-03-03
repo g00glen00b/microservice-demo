@@ -1,4 +1,4 @@
-package be.g00glen00b.service.web;
+package be.g00glen00b.service.web.model;
 
 public enum ArticleSort {
     CREATED_ASC("created", true), CREATED_DESC("created", false);

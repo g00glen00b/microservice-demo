@@ -1,5 +1,6 @@
 server:
-  port: 8000
+  port: 8003
+  context-path: /blog
 spring:
   application:
     name: blog-service
@@ -17,5 +18,11 @@ eureka:
     service-url:
       defaultZone: http://localhost:8001/eureka/
   instance:
-    status-page-url-path: /info
-    health-check-url-path: /health
+    statusPageUrlPath: ${server.context-path}/info
+    healthCheckUrlPath: ${server.context-path}/health
+security:
+  token:
+    endpoint: http://uaa-service/uaa/api/user
+    header: X-Token
+management:
+  context-path: /
