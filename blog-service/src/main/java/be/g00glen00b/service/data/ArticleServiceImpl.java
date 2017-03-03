@@ -2,9 +2,9 @@ package be.g00glen00b.service.data;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import be.g00glen00b.service.web.ArticleDTO;
-import be.g00glen00b.service.web.ArticleSort;
-import be.g00glen00b.service.web.ArticlesDTO;
+import be.g00glen00b.service.web.model.ArticleDTO;
+import be.g00glen00b.service.web.model.ArticleSort;
+import be.g00glen00b.service.web.model.ArticlesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
