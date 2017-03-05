@@ -98,5 +98,5 @@ public class ProfileService {
         } finally {
             IOUtils.closeQuietly(inputStream);
         }
-
+    }
 }

@@ -1,0 +1,26 @@
+server:
+  port: 8005
+spring:
+  application:
+    name: gateway-service
+eureka:
+  client:
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+  instance:
+    statusPageUrlPath: /info
+    healthCheckUrlPath: /health
+management:
+  context-path: /
+zuul:
+  routes:
+    profile-service:
+      path: /profile/**
+      stripPrefix: false
+    blog-service:
+      path: /blog/**
+      stripPrefix: false
+    uaa-service:
+      path: /uaa/**
+      stripPrefix: false
