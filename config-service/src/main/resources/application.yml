@@ -1,0 +1,17 @@
+spring:
+  jackson:
+    serialization:
+      indent_output: true
+  cloud:
+    config:
+      server:
+        git:
+          uri: git@github.com:g00glen00b/microservice-demo-config.git
+          searchPaths: '{application}'
+          timeout: 15
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8001/eureka/
+server:
+  port: 8000
