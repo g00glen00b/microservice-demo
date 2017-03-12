@@ -2,6 +2,8 @@ package be.g00glen00b.service.data;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
+import be.g00glen00b.service.ArticleNotFoundException;
 import be.g00glen00b.service.web.model.ArticleDTO;
 import be.g00glen00b.service.web.model.ArticleSort;
 import be.g00glen00b.service.web.model.ArticlesDTO;
@@ -31,14 +33,20 @@ public class ArticleServiceImpl implements ArticleService {
         return new ArticlesDTO(offset, limit, page.getTotalElements(), getDTO(page.getContent()));
     }
 
-    private List<ArticleDTO> getDTO(List<Article> content) {
-        return content.stream()
-            .map(this::getDTO)
-            .collect(Collectors.toList());
+    @Override
+    public ArticleDTO findOne(String slug) {
+        return ArticleDTO.fromEntity(repository.findBySlug(slug).orElseThrow(ArticleNotFoundException::new));
     }
 
-    private ArticleDTO getDTO(Article entity) {
-        return new ArticleDTO(entity.getId(), entity.getTitle(), entity.getText(), entity.getSlug(), entity.getCreated());
+    @Override
+    public ArticleDTO save(@Valid ArticleDTO dto) {
+        return ArticleDTO.fromEntity(repository.save(new Article(dto.getTitle(), dto.getText(), null, dto.getSlug(), dto.getCreated())));
+    }
+
+    private List<ArticleDTO> getDTO(List<Article> content) {
+        return content.stream()
+            .map(ArticleDTO::fromEntity)
+            .collect(Collectors.toList());
     }
 
     private Specification<Article> getSpecification(ArticleQuery query) {

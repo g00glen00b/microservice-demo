@@ -5,6 +5,7 @@ import be.g00glen00b.service.security.service.TokenAuthenticationUserDetailsServ
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -29,6 +30,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatcher("/api/**")
             .authorizeRequests()
             .anyRequest()
+            .anonymous()
+            .antMatchers(HttpMethod.POST, "/**")
+            .authenticated()
+            .antMatchers(HttpMethod.PUT, "/**")
+            .authenticated()
+            .antMatchers(HttpMethod.DELETE, "/**")
             .authenticated()
             .and()
             .addFilterBefore(filter, RequestHeaderAuthenticationFilter.class)

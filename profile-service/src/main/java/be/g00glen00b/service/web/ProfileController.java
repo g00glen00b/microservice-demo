@@ -31,18 +31,18 @@ public class ProfileController {
         return service.findAll(offset, limit);
     }
 
-    @GetMapping("/{id}")
-    public ProfileDTO findOne(@PathVariable Long id) {
-        return service.findOne(id);
+    @GetMapping("/{username}")
+    public ProfileDTO findOne(@PathVariable String username) {
+        return service.findOne(username);
     }
 
-    @PutMapping("/{id}/avatar")
-    public ResponseEntity updateAvatar(@RequestParam MultipartFile avatar, @PathVariable Long id) {
-        return service.updateAvatar(id, avatar);
+    @PutMapping("/{username}/avatar")
+    public ResponseEntity updateAvatar(@RequestParam MultipartFile avatar, @PathVariable String username) {
+        return service.updateAvatar(username, avatar);
     }
 
-    @GetMapping("/{id}/avatar")
-    public ResponseEntity getAvatar(@PathVariable Long id) {
-        return service.getAvatar(id);
+    @GetMapping("/{username}/avatar")
+    public ResponseEntity getAvatar(@PathVariable String username) {
+        return service.getAvatar(username);
     }
 }

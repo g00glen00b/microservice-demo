@@ -13,17 +13,21 @@ public class Article {
     private Long id;
     private String title;
     private String text;
-    private Long user;
+    private String username;
     private String slug;
     private LocalDateTime created;
 
-    public Article(Long id, String title, String text, Long user, String slug, LocalDateTime created) {
+    public Article(Long id, String title, String text, String username, String slug, LocalDateTime created) {
         this.id = id;
         this.title = title;
         this.text = text;
-        this.user = user;
+        this.username = username;
         this.slug = slug;
         this.created = created;
+    }
+
+    public Article(String title, String text, String username, String slug, LocalDateTime created) {
+        this(null, title, text, username, slug, created);
     }
 
     public Article() {
@@ -47,11 +51,8 @@ public class Article {
         this.text = text;
     }
 
-    public Long getUser() {
-        return user;
-    }
-    public void setUser(Long user) {
-        this.user = user;
+    public String getUsername() {
+        return username;
     }
 
     public String getSlug() {
@@ -63,8 +64,5 @@ public class Article {
 
     public LocalDateTime getCreated() {
         return created;
-    }
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
     }
 }

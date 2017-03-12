@@ -41,20 +41,20 @@ public class ProfileService {
             .collect(Collectors.toList()));
     }
 
-    public ProfileDTO findOne(long id) {
-        return ProfileDTO.fromEntity(repository.findOneOptional(id)
+    public ProfileDTO findOne(String username) {
+        return ProfileDTO.fromEntity(repository.findOneOptional(username)
             .orElseThrow(ProfileNotFoundException::new));
     }
 
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity updateAvatar(Long id, MultipartFile file) {
+    public ResponseEntity updateAvatar(String username, MultipartFile file) {
         if (file.getSize() > FILE_SIZE_LIMIT) {
             throw new ProfileAvatarInvalidException("File is too large");
         } else if (!file.getContentType().startsWith("image/")) {
             throw new ProfileAvatarInvalidException("File can only be an image");
         }
-        Profile profile = repository.findOneDetailedOptional(id)
+        Profile profile = repository.findOneDetailedOptional(username)
             .orElseThrow(ProfileNotFoundException::new);
         if (!profile.isCurrentUser()) {
             throw new ProfileAvatarInvalidException("You do not have the permission to change this avatar");
@@ -74,8 +74,8 @@ public class ProfileService {
         return getAvatarResponse(profile.getAvatar());
     }
 
-    public ResponseEntity getAvatar(Long id) {
-        Profile profile = repository.findOneDetailedOptional(id)
+    public ResponseEntity getAvatar(String username) {
+        Profile profile = repository.findOneDetailedOptional(username)
             .orElseThrow(ProfileNotFoundException::new);
         ProfileAvatar avatar = profile.getAvatar();
         if (avatar != null) {

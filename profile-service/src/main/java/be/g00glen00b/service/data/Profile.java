@@ -12,8 +12,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 @Entity
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private String username;
     private String firstname;
     private String lastname;
@@ -21,8 +19,7 @@ public class Profile {
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProfileAvatar avatar;
 
-    public Profile(Long id, String username, String firstname, String lastname, String bio, ProfileAvatar avatar) {
-        this.id = id;
+    public Profile(String username, String firstname, String lastname, String bio, ProfileAvatar avatar) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -33,15 +30,8 @@ public class Profile {
     public Profile() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
     public String getUsername() {
         return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getFirstname() {

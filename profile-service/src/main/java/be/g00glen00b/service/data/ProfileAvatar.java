@@ -18,7 +18,7 @@ public class ProfileAvatar {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "profile_id")
+    @JoinColumn(name = "username")
     private Profile profile;
     @Lob
     private Blob avatar;

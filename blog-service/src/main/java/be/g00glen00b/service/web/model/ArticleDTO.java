@@ -1,17 +1,23 @@
 package be.g00glen00b.service.web.model;
 
 import java.time.LocalDateTime;
+import javax.validation.constraints.NotNull;
+import be.g00glen00b.service.data.Article;
 
 public class ArticleDTO {
     private Long id;
+    @NotNull
     private String title;
     private String text;
+    private String username;
+    @NotNull
     private String slug;
     private LocalDateTime created;
 
-    public ArticleDTO(Long id, String title, String text, String slug, LocalDateTime created) {
+    public ArticleDTO(Long id, String title, String username, String text, String slug, LocalDateTime created) {
         this.id = id;
         this.title = title;
+        this.username = username;
         this.text = text;
         this.slug = slug;
         this.created = created;
@@ -29,6 +35,13 @@ public class ArticleDTO {
     }
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getText() {
@@ -50,5 +63,9 @@ public class ArticleDTO {
     }
     public void setCreated(LocalDateTime created) {
         this.created = created;
+    }
+
+    public static ArticleDTO fromEntity(Article entity) {
+        return new ArticleDTO(entity.getId(), entity.getTitle(), entity.getUsername(), entity.getText(), entity.getSlug(), entity.getCreated());
     }
 }
