@@ -21,7 +21,7 @@ public class ProfileAvatarCommandLineRunner implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... strings) throws Exception {
-        Profile profile = repository.findOne(1L);
+        Profile profile = repository.findOne("g00glen00b");
         ClassPathResource classPathResource = new ClassPathResource("logo.png");
         profile.setAvatar(new ProfileAvatar(profile, new SerialBlob(IOUtils.toByteArray(classPathResource.getURL())), "image/png"));
     }

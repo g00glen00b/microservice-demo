@@ -19,9 +19,9 @@ public class ArticleSpecifications {
         }
     }
 
-    public static Specification<Article> withUser(Long user) {
+    public static Specification<Article> withUsername(String user) {
         if (user != null) {
-            return (root, query, cb) -> cb.equal(cb.lower(root.get("user")), user);
+            return (root, query, cb) -> cb.equal(cb.lower(root.get("username")), user);
         } else {
             return null;
         }

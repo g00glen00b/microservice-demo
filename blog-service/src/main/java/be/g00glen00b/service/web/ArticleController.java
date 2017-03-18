@@ -25,12 +25,12 @@ public class ArticleController {
     @GetMapping
     public ArticlesDTO findAll(
         @RequestParam(required = false) String search,
-        @RequestParam(required = false) Long user,
+        @RequestParam(required = false) String username,
         @RequestParam(required = false, defaultValue = "0") int offset,
         @RequestParam(required = false, defaultValue = "10") int limit,
         @RequestParam(required = false, defaultValue = "-created") ArticleSort sort
     ) {
-        return service.findAll(new ArticleQuery(search, user), offset, limit, sort);
+        return service.findAll(new ArticleQuery(search, username), offset, limit, sort);
     }
 
     @GetMapping("/{slug}")

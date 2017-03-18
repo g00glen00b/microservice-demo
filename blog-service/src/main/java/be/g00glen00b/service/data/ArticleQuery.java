@@ -2,18 +2,18 @@ package be.g00glen00b.service.data;
 
 public class ArticleQuery {
     private String search;
-    private Long user;
+    private String username;
 
-    public ArticleQuery(String search, Long user) {
+    public ArticleQuery(String search, String username) {
         this.search = search;
-        this.user = user;
+        this.username = username;
     }
 
     public String getSearch() {
         return search;
     }
 
-    public Long getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 }

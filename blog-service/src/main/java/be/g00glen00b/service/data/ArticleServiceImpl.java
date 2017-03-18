@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import static org.springframework.data.jpa.domain.Specifications.where;
 
 import static be.g00glen00b.service.data.ArticleSpecifications.withSearch;
-import static be.g00glen00b.service.data.ArticleSpecifications.withUser;
+import static be.g00glen00b.service.data.ArticleSpecifications.withUsername;
 
 @Service
 public class ArticleServiceImpl implements ArticleService {
@@ -51,7 +51,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     private Specification<Article> getSpecification(ArticleQuery query) {
         return where(withSearch(query.getSearch()))
-            .and(withUser(query.getUser()));
+            .and(withUsername(query.getUsername()));
     }
 
     private OffsetPageRequest getPageRequst(int offset, int limit, ArticleSort sort) {
