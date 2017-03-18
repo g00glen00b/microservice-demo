@@ -1,3 +1,30 @@
-<h1>
-  {{title}}
-</h1>
+<clr-main-container>
+  <header class="header-6">
+    <div class="branding">
+      <a href="" class="nav-link">
+        <span class="title">Blog application</span>
+      </a>
+    </div>
+    <div class="header-nav" [clr-nav-level]="1">
+      <a href="" class="nav-link nav-text">Home</a>
+      <a href="" class="nav-link nav-text">Articles</a>
+      <a href="" class="nav-link nav-text">About me</a>
+    </div>
+    <div class="header-actions">
+      <a href="" class="nav-link nav-icon" title="Log in">
+        <clr-icon shape="login"></clr-icon>
+      </a>
+      <a href="" class="nav-link nav-icon" title="Profile">
+        <clr-icon shape="avatar"></clr-icon>
+      </a>
+      <a href="" class="nav-link nav-icon" title="Log out">
+        <clr-icon shape="logout"></clr-icon>
+      </a>
+    </div>
+  </header>
+  <div class="content-container">
+    <main class="content-area">
+      ...
+    </main>
+  </div>
+</clr-main-container>
