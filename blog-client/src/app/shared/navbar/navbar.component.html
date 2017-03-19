@@ -1,11 +1,11 @@
 <header class="header-6">
   <div class="branding">
-    <a href="" class="nav-link">
+    <a [routerLink]="['/home']" class="nav-link">
       <span class="title">Blog application</span>
     </a>
   </div>
   <div class="header-nav" [clr-nav-level]="1">
-    <a href="" class="nav-link nav-text">Home</a>
-    <a href="" class="nav-link nav-text">Articles</a>
+    <a [routerLink]="['/home']" class="nav-link nav-text">Home</a>
+    <a [routerLink]="['/articles']" class="nav-link nav-text">Articles</a>
   </div>
 </header>

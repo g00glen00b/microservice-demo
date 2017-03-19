@@ -7,15 +7,14 @@ import {ClarityModule} from 'clarity-angular';
 import {HomeModule} from './home/home.module';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from './shared/shared.module';
+import {ArticleModule} from './articles/article.module';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     FormsModule,
@@ -23,6 +22,7 @@ const routes: Routes = [
     HttpModule,
     ClarityModule.forRoot(),
     HomeModule,
+    ArticleModule,
     SharedModule,
     RouterModule.forRoot(routes)
   ],
