@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 import {HttpModule} from '@angular/http';
 import {AppComponent} from './app.component';
 import {ClarityModule} from 'clarity-angular';
-import {NavbarComponent} from './shared/navbar/navbar.component';
 import {HomeModule} from './home/home.module';
 import {RouterModule, Routes} from '@angular/router';
+import {SharedModule} from './shared/shared.module';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -14,8 +14,7 @@ const routes: Routes = [
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent
+    AppComponent
   ],
   imports: [
     BrowserModule,
@@ -24,6 +23,7 @@ const routes: Routes = [
     HttpModule,
     ClarityModule.forRoot(),
     HomeModule,
+    SharedModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],
