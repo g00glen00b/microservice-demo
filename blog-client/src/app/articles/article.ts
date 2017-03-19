@@ -1,5 +1,7 @@
 import * as _ from 'lodash';
 
+const excerptLength: number = 100;
+
 export class Article {
   id: number;
   title: string;
@@ -23,6 +25,6 @@ export class Article {
   }
 
   getExcerpt() {
-    return _.truncate(this.text);
+    return _.truncate(this.text, {length: excerptLength});
   }
 }

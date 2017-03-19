@@ -14,7 +14,7 @@ export class Articles {
   }
 
   static fromResponse(response): Articles {
-    let results = response['results'].map(Article.fromResponse(response));
+    let results = response['results'].map(Article.fromResponse);
     return new Articles(response['offset'], response['limit'], response['totalResults'], results);
   }
 }
