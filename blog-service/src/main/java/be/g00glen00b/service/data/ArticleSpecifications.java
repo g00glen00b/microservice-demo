@@ -19,9 +19,9 @@ public class ArticleSpecifications {
         }
     }
 
-    public static Specification<Article> withUsername(String user) {
-        if (user != null) {
-            return (root, query, cb) -> cb.equal(cb.lower(root.get("username")), user);
+    public static Specification<Article> withUsername(String username) {
+        if (StringUtils.isNotEmpty(username)) {
+            return (root, query, cb) -> cb.equal(cb.lower(root.get("username")), username);
         } else {
             return null;
         }

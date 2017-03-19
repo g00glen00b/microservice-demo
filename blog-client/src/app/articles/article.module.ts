@@ -3,6 +3,7 @@ import {CommonModule} from '@angular/common';
 import {ArticleService} from './article.service';
 import {ArticlesComponent} from './articles.component';
 import {Routes, RouterModule} from '@angular/router';
+import { ArticleExcerptComponent } from './article-excerpt/article-excerpt.component';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent}
@@ -10,7 +11,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [CommonModule, RouterModule.forChild(routes)],
-  declarations: [ArticlesComponent],
+  declarations: [ArticlesComponent, ArticleExcerptComponent],
   providers: [ArticleService]
 })
 export class ArticleModule {
