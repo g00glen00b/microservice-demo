@@ -17,6 +17,6 @@ export class Article {
   }
 
   static fromResponse(response): Article {
-    return new Article(response['id'], response['title'], response['text'], response['username'], response['slug'], new Date(response['create']));
+    return new Article(response['id'], response['title'], response['text'], response['username'], response['slug'], new Date(response['created']));
   }
 }

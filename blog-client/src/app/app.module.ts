@@ -8,6 +8,7 @@ import {HomeModule} from './home/home.module';
 import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from './shared/shared.module';
 import {ArticleModule} from './articles/article.module';
+import {MarkdownModule} from 'angular2-markdown';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -21,6 +22,7 @@ const routes: Routes = [
     HttpModule,
     HttpModule,
     ClarityModule.forRoot(),
+    MarkdownModule.forRoot(),
     HomeModule,
     ArticleModule,
     SharedModule,

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ArticleService} from './article.service';
-import {Articles} from './articles';
+import {Articles} from './model/articles';
 
 @Component({
   selector: 'app-articles',
@@ -14,7 +14,11 @@ export class ArticlesComponent implements OnInit {
   constructor(private _service: ArticleService) { }
 
   ngOnInit() {
-    this._service.findAll(this.offset, this.limit).subscribe(articles => this.articles = articles);
+    this.findAll(this.offset, this.limit);
+  }
+
+  findAll(offset: number, limit: number) {
+    this._service.findAll(offset, limit).subscribe(articles => this.articles = articles);
   }
 
 }

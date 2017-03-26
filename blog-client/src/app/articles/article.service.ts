@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Articles} from './articles';
+import {Articles} from './model/articles';
 import {Observable} from 'rxjs';
 import {Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import {MarkdownService} from './markdown.service';
-import {Article} from './article';
+import {Article} from './model/article';
 import * as _ from 'lodash';
 
 const baseUrl: string = 'http://localhost:8005/blog/api/article';
@@ -21,6 +21,13 @@ export class ArticleService {
       .get(`${baseUrl}?offset=${offset}&limit=${limit}&search=${search}&username=${username}`)
       .map(response => response.json())
       .map(response => Articles.fromResponse(response));
+  }
+
+  findOne(slug: string): Observable<Article> {
+    return this._http
+      .get(`${baseUrl}/${slug}`)
+      .map(response => response.json())
+      .map(response => Article.fromResponse(response));
   }
 
   getExcerpt(article: Article) {

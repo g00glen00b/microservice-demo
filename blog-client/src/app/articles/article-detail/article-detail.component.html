@@ -1,0 +1,3 @@
+<h1>{{article?.title}}</h1>
+<p class="p2">Posted by {{article?.username}} on {{article?.created | date:'mediumDate'}}</p>
+<markdown [data]="article.text" *ngIf="article != null"></markdown>

@@ -1,2 +1,10 @@
-<h2>{{article.title}}</h2>
-<p>{{excerpt}}</p>
+<a [routerLink]="['/articles', article.slug]" class="card clickable">
+  <div class="card-header">
+    {{article.title}}
+  </div>
+  <div class="card-block">
+    <p class="card-text">
+      {{excerpt}}
+    </p>
+  </div>
+</a>
