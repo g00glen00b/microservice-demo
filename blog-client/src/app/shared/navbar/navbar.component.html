@@ -8,4 +8,12 @@
     <a [routerLink]="['/home']" [routerLinkActive]="['active']" class="nav-link nav-text">Home</a>
     <a [routerLink]="['/articles']" [routerLinkActive]="['active']" class="nav-link nav-text">Articles</a>
   </div>
+  <div class="header-actions">
+    <a href="javascript://" class="nav-link nav-icon" *ngIf="authentication?.claims != null">
+      <clr-icon shape="cog"></clr-icon>
+    </a>
+    <a [routerLink]="['/login']" class="nav-link nav-icon" title="Login" *ngIf="authentication?.claims == null">
+      <clr-icon shape="login"></clr-icon>
+    </a>
+  </div>
 </header>

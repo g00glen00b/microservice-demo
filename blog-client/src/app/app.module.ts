@@ -9,6 +9,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {SharedModule} from './shared/shared.module';
 import {ArticleModule} from './articles/article.module';
 import {MarkdownModule} from 'angular2-markdown';
+import {AuthenticationModule} from './authentication/authentication.module';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -26,6 +27,7 @@ const routes: Routes = [
     HomeModule,
     ArticleModule,
     SharedModule,
+    AuthenticationModule,
     RouterModule.forRoot(routes)
   ],
   providers: [],

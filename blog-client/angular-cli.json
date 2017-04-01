@@ -26,7 +26,8 @@
       "scripts": [
         "../node_modules/@webcomponents/custom-elements/custom-elements.min.js",
         "../node_modules/clarity-icons/clarity-icons.min.js",
-        "../node_modules/marked/marked.min.js"
+        "../node_modules/marked/marked.min.js",
+        "../node_modules/jwt-decode/build/jwt-decode.min.js"
       ],
       "environments": {
         "source": "environments/environment.ts",
