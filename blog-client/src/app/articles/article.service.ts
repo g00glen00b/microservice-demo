@@ -7,7 +7,7 @@ import {MarkdownService} from './markdown.service';
 import {Article} from './model/article';
 import * as _ from 'lodash';
 
-const baseUrl: string = 'http://localhost:8005/blog/api/article';
+const baseUrl: string = 'http://localhost:8005/blog-service/api/article';
 const excerptLength: number = 200;
 
 @Injectable()

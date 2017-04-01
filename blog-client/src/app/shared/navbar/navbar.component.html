@@ -9,9 +9,17 @@
     <a [routerLink]="['/articles']" [routerLinkActive]="['active']" class="nav-link nav-text">Articles</a>
   </div>
   <div class="header-actions">
-    <a href="javascript://" class="nav-link nav-icon" *ngIf="authentication?.claims != null">
-      <clr-icon shape="cog"></clr-icon>
-    </a>
+    <clr-dropdown class="dropdown bottom-right" *ngIf="authentication?.claims != null">
+      <button class="nav-icon" clrDropdownToggle>
+        <clr-icon shape="cog"></clr-icon>
+        <clr-icon shape="caret down"></clr-icon>
+      </button>
+      <div class="dropdown-menu">
+        <span class="dropdown-item disabled">Welcome {{authentication.claims.sub}}</span>
+        <div class="dropdown-divider"></div>
+        <a href="..." clrDropdownItem>Log out</a>
+      </div>
+    </clr-dropdown>
     <a [routerLink]="['/login']" class="nav-link nav-icon" title="Login" *ngIf="authentication?.claims == null">
       <clr-icon shape="login"></clr-icon>
     </a>

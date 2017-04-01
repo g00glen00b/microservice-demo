@@ -1,18 +1,20 @@
 <div class="login-wrapper">
-  <form class="login">
-    <label class="title">
-      Blog Application
-    </label>
+  <form class="login" #loginForm="ngForm" (ngSubmit)="onLogin()">
+    <label class="title">Blog Application</label>
     <div class="login-group">
-      <input class="username" type="text" id="login_username" placeholder="Username">
-      <input class="password" type="password" id="login_password" placeholder="Password">
+      <input class="username" type="text" name="username" placeholder="Username" [(ngModel)]="username" required
+             maxlength="64">
+      <input class="password" type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
       <div class="checkbox">
         <input type="checkbox" id="rememberme">
         <label for="rememberme">
           Remember me
         </label>
       </div>
-      <button type="submit" class="btn btn-primary">LOG IN</button>
+      <div class="error active" *ngIf="authentication?.error != null">
+        {{authentication.error}}
+      </div>
+      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
       <a href="..." class="signup">Sign up for an account</a>
     </div>
   </form>
