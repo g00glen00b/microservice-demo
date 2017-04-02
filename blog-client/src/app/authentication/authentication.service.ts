@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {GlobalState} from './globalState';
 import {Store} from '@ngrx/store';
 import * as jwt_decode from 'jwt-decode';
-import {LOGIN, LOGIN_FAILED, LOGIN_IN_PROGRESS} from './auth.reducer';
+import {LOGIN, LOGIN_FAILED, LOGIN_IN_PROGRESS, LOGOUT} from './auth.reducer';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -29,6 +29,12 @@ export class AuthenticationService {
       .subscribe(token => this.dispatchToken(token),
         err => this._store.dispatch({ type: LOGIN_FAILED, payload: { message: this.getMessage(err) } }));
     return observable;
+  }
+
+  logout() {
+    localStorage.removeItem(tokenKey);
+    sessionStorage.removeItem(tokenKey);
+    this._store.dispatch({ type: LOGOUT });
   }
 
   getToken(): string {

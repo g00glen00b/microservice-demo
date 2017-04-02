@@ -17,7 +17,7 @@
       <div class="dropdown-menu">
         <span class="dropdown-item disabled">Welcome {{authentication.claims.sub}}</span>
         <div class="dropdown-divider"></div>
-        <a href="..." clrDropdownItem>Log out</a>
+        <a href="" clrDropdownItem (click)="logout($event)">Log out</a>
       </div>
     </clr-dropdown>
     <a [routerLink]="['/login']" class="nav-link nav-icon" title="Login" *ngIf="authentication?.claims == null">

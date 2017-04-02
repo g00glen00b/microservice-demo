@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {GlobalState} from '../../authentication/globalState';
 import {Store} from '@ngrx/store';
+import {AuthenticationService} from '../../authentication/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,10 +9,15 @@ import {Store} from '@ngrx/store';
 })
 export class NavbarComponent implements OnInit {
   authentication;
-  constructor(private _store: Store<GlobalState>) { }
+  constructor(private _store: Store<GlobalState>, private _service: AuthenticationService) { }
 
   ngOnInit() {
     this._store.select('auth').subscribe(authentication => this.authentication = authentication);
+  }
+
+  logout() {
+    this._service.logout();
+    event.preventDefault();
   }
 
 }
