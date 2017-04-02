@@ -1,4 +1,7 @@
 <h1>Articles</h1>
+<a [routerLink]="['/articles/new']" class="btn btn-primary" *ngIf="authenticated">
+  <clr-icon shape="plus" ></clr-icon> New article
+</a>
 <div class="card-columns card-columns-2">
   <app-article-excerpt *ngFor="let article of articles?.results" [article]="article"></app-article-excerpt>
 </div>

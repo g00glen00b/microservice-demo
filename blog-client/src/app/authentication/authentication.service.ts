@@ -1,20 +1,20 @@
 import {Injectable} from '@angular/core';
-import {GlobalState} from './globalState';
 import {Store} from '@ngrx/store';
 import * as jwt_decode from 'jwt-decode';
 import {LOGIN, LOGIN_FAILED, LOGIN_IN_PROGRESS, LOGOUT} from './auth.reducer';
-import {Http, Headers} from '@angular/http';
+import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/share';
 import {Observable} from 'rxjs';
+import {Authentication} from './authentication';
 
 const tokenKey = 'blog.auth.token';
 
 @Injectable()
 export class AuthenticationService {
 
-  constructor(private _store: Store<GlobalState>, private _http: Http) {
+  constructor(private _store: Store<Authentication>, private _http: Http) {
   }
 
   login(username: string, password: string, rememberMe: boolean): Observable<string> {

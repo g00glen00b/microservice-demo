@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
 import {Store} from '@ngrx/store';
-import {GlobalState} from '../globalState';
 import {Router} from '@angular/router';
+import {AppState} from '../app-state';
 
 @Component({
   selector: 'app-login',
@@ -14,10 +14,12 @@ export class LoginComponent implements OnInit {
   rememberMe: boolean;
   authentication;
 
-  constructor(private _service: AuthenticationService, private _store: Store<GlobalState>, private _router: Router) { }
+  constructor(private _service: AuthenticationService, private _store: Store<AppState>, private _router: Router) { }
 
   ngOnInit() {
-    this._store.select('auth').subscribe(authentication => this.authentication = authentication);
+    this._store
+      .select(state => state.auth)
+      .subscribe(authentication => this.authentication = authentication);
   }
 
   onLogin() {

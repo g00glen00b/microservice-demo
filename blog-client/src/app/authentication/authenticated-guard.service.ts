@@ -1,17 +1,19 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {CanActivate} from '@angular/router';
-import {GlobalState} from './globalState';
 import {Store} from '@ngrx/store';
+import {AppState} from './app-state';
 
 @Injectable()
 export class AuthenticatedGuardService implements CanActivate {
-  authentication;
+  authenticated: boolean = false;
 
-  constructor(private _store: Store<GlobalState>) {
-    this._store.select('auth').subscribe(authentication => this.authentication = authentication);
+  constructor(private _store: Store<AppState>) {
+    this._store
+      .select(state => state.auth)
+      .subscribe(authentication => this.authenticated = authentication.claims != null);
   }
 
   canActivate(): boolean {
-    return this.authentication.claims != null;
+    return this.authenticated;
   }
 }
