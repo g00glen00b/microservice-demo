@@ -6,9 +6,11 @@ import {LoginComponent} from './login/login.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
 import {FormsModule} from '@angular/forms';
+import {AuthenticatedGuardService} from './authenticated-guard.service';
+import {UnauthenticatedGuardService} from './unauthenticated-guard.service';
 
 const routes: Routes = [
-  {component: LoginComponent, path: 'login'}
+  {component: LoginComponent, path: 'login', canActivate: [UnauthenticatedGuardService]}
 ];
 
 @NgModule({
@@ -19,6 +21,6 @@ const routes: Routes = [
     FormsModule
   ],
   declarations: [LoginComponent],
-  providers: [AuthenticationService]
+  providers: [AuthenticationService, AuthenticatedGuardService, UnauthenticatedGuardService]
 })
 export class AuthenticationModule { }
