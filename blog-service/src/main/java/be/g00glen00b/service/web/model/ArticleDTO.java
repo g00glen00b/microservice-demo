@@ -2,15 +2,19 @@ package be.g00glen00b.service.web.model;
 
 import java.time.LocalDateTime;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import be.g00glen00b.service.data.Article;
 
 public class ArticleDTO {
     private Long id;
     @NotNull
+    @Size(max = 64)
     private String title;
+    @Size(max = 16384)
     private String text;
     private String username;
     @NotNull
+    @Size(max = 64)
     private String slug;
     private LocalDateTime created;
 

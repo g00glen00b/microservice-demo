@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import {MarkdownService} from './markdown.service';
 import {Article} from './model/article';
 import * as _ from 'lodash';
+import {AuthenticatedHttp} from '../authentication/authenticated-http.service';
 
 const baseUrl: string = 'http://localhost:8005/blog-service/api/article';
 const excerptLength: number = 200;
@@ -13,7 +14,7 @@ const excerptLength: number = 200;
 @Injectable()
 export class ArticleService {
 
-  constructor(private _http: Http, private _markdown: MarkdownService) {
+  constructor(private _http: Http, private _authenticatedHttp: AuthenticatedHttp, private _markdown: MarkdownService) {
   }
 
   findAll(offset: number = 0, limit: number = 10, search: string = "", username: string = ""): Observable<Articles> {
@@ -26,6 +27,13 @@ export class ArticleService {
   findOne(slug: string): Observable<Article> {
     return this._http
       .get(`${baseUrl}/${slug}`)
+      .map(response => response.json())
+      .map(response => Article.fromResponse(response));
+  }
+
+  save(article: Article): Observable<Article> {
+    return this._authenticatedHttp
+      .post(`${baseUrl}`, article)
       .map(response => response.json())
       .map(response => Article.fromResponse(response));
   }

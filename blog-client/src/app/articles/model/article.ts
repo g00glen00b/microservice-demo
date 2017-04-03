@@ -7,7 +7,7 @@ export class Article {
   created: Date;
 
 
-  constructor(id: number, title: string, text: string, username: string, slug: string, created: Date) {
+  constructor(id: number = null, title: string = null, text: string = null, username: string = null, slug: string = null, created: Date = new Date()) {
     this.id = id;
     this.title = title;
     this.text = text;

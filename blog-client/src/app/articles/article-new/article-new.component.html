@@ -1,3 +1,24 @@
-<p>
-  article-new works!
-</p>
+<form #articleForm="ngForm" (ngSubmit)="onSubmit()">
+  <section class="form-block">
+    <label>New article</label>
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input type="text" id="title" required name="title" [(ngModel)]="article.title" #titleInput="ngModel"
+             maxlength="64" (change)="createSlug(article.title)">
+    </div>
+    <div class="form-group">
+      <label for="slug">Slug</label>
+      <span>{{prefix}}</span>
+      <input type="text" id="slug" placeholder="path-to-article" required name="slug" [(ngModel)]="article.slug"
+             #slugInput="ngModel" maxlength="64">
+    </div>
+    <div class="form-group">
+      <label for="text">Text</label>
+      <textarea id="text" placeholder="Tell your story..." required name="text" [(ngModel)]="article.text"
+                #textInput="ngModel" rows="10" maxlength="16384">
+      </textarea>
+      Markdown syntax is supported.
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="articleForm.form.invalid">Add</button>
+  </section>
+</form>

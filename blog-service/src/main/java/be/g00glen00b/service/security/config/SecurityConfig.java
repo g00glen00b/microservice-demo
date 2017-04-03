@@ -41,7 +41,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .addFilterBefore(filter, RequestHeaderAuthenticationFilter.class)
             .authenticationProvider(preAuthProvider())
             .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .csrf()
+            .disable();
     }
 
     @Bean

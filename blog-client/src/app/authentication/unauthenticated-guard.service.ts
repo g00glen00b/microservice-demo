@@ -4,7 +4,7 @@ import {CanActivate} from '@angular/router';
 import {AppState} from './app-state';
 
 @Injectable()
-export class UnauthenticatedGuardService implements CanActivate {
+export class UnauthenticatedGuard implements CanActivate {
   unauthenticated: boolean = false;
 
   constructor(private _store: Store<AppState>) {

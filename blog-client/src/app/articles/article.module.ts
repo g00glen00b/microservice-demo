@@ -9,17 +9,25 @@ import {SharedModule} from '../shared/shared.module';
 import {ArticleDetailComponent} from './article-detail/article-detail.component';
 import {MarkdownModule} from 'angular2-markdown';
 import {ClarityModule} from 'clarity-angular';
-import { ArticleNewComponent } from './article-new/article-new.component';
-import {AuthenticatedGuardService} from '../authentication/authenticated-guard.service';
+import {ArticleNewComponent} from './article-new/article-new.component';
+import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
+import {FormsModule} from '@angular/forms';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
-  {path: 'articles/new', component: ArticleNewComponent, canActivate: [AuthenticatedGuardService]},
+  {path: 'articles/new', component: ArticleNewComponent, canActivate: [AuthenticatedGuard]},
   {path: 'articles/:slug', component: ArticleDetailComponent}
 ];
 
 @NgModule({
-  imports: [CommonModule, RouterModule.forChild(routes), SharedModule, MarkdownModule.forRoot(), ClarityModule.forChild()],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    SharedModule,
+    MarkdownModule.forRoot(),
+    ClarityModule.forChild(),
+    FormsModule
+  ],
   declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, ArticleNewComponent],
   providers: [ArticleService, MarkdownService]
 })

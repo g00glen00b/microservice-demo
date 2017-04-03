@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Store} from '@ngrx/store';
 import * as jwt_decode from 'jwt-decode';
-import {LOGIN, LOGIN_FAILED, LOGIN_IN_PROGRESS, LOGOUT} from './auth.reducer';
+import {INIT, LOGIN, LOGIN_FAILED, LOGIN_IN_PROGRESS, LOGOUT} from './auth.reducer';
 import {Headers, Http} from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/do';
@@ -37,18 +37,6 @@ export class AuthenticationService {
     this._store.dispatch({ type: LOGOUT });
   }
 
-  getToken(): string {
-    let token = sessionStorage.getItem(tokenKey);
-    if (token == null) {
-      token = localStorage.getItem(tokenKey);
-    }
-    return token;
-  }
-
-  getClaims(token: string) {
-    return jwt_decode(token);
-  }
-
   init() {
     let token = this.getToken();
     if (token != null) {
@@ -56,11 +44,29 @@ export class AuthenticationService {
     }
   }
 
-  dispatchToken(token: string) {
-    this._store.dispatch({ type: LOGIN, payload: { token: token, claims: this.getClaims(token), error: null } });
+  private dispatchToken(token: string) {
+    let claims = this.getClaims(token);
+    console.log(claims);
+    if (claims['exp'] < new Date().getTime()/1000) {
+      this.logout();
+    } else {
+      this._store.dispatch({type: LOGIN, payload: {token: token, claims: claims, error: null}});
+    }
   }
 
-  saveToken(token: string, rememberMe: boolean) {
+  private getToken(): string {
+    let token = sessionStorage.getItem(tokenKey);
+    if (token == null) {
+      token = localStorage.getItem(tokenKey);
+    }
+    return token;
+  }
+
+  private getClaims(token: string) {
+    return jwt_decode(token);
+  }
+
+  private saveToken(token: string, rememberMe: boolean) {
     if (rememberMe) {
       localStorage.setItem(tokenKey, token);
     } else {
@@ -68,7 +74,7 @@ export class AuthenticationService {
     }
   }
 
-  getMessage(error) {
+  private getMessage(error) {
     if (error.status == 401) {
       return 'Username/Password wrong.'
     } else {

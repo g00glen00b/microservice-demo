@@ -4,7 +4,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from './app-state';
 
 @Injectable()
-export class AuthenticatedGuardService implements CanActivate {
+export class AuthenticatedGuard implements CanActivate {
   authenticated: boolean = false;
 
   constructor(private _store: Store<AppState>) {
