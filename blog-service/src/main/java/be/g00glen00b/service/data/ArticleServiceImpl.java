@@ -1,9 +1,11 @@
 package be.g00glen00b.service.data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
 import be.g00glen00b.service.ArticleNotFoundException;
+import be.g00glen00b.service.security.service.UserService;
 import be.g00glen00b.service.web.model.ArticleDTO;
 import be.g00glen00b.service.web.model.ArticleSort;
 import be.g00glen00b.service.web.model.ArticlesDTO;
@@ -21,10 +23,12 @@ import static be.g00glen00b.service.data.ArticleSpecifications.withUsername;
 @Service
 public class ArticleServiceImpl implements ArticleService {
     private ArticleRepository repository;
+    private UserService userService;
 
     @Autowired
-    public ArticleServiceImpl(ArticleRepository repository) {
+    public ArticleServiceImpl(ArticleRepository repository, UserService userService) {
         this.repository = repository;
+        this.userService = userService;
     }
 
     @Override
@@ -40,7 +44,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDTO save(@Valid ArticleDTO dto) {
-        return ArticleDTO.fromEntity(repository.save(new Article(dto.getTitle(), dto.getText(), null, dto.getSlug(), dto.getCreated())));
+        Article entity = new Article(dto.getTitle(), dto.getText(), userService.getUsername(), dto.getSlug(), LocalDateTime.now());
+        return ArticleDTO.fromEntity(repository.save(entity));
     }
 
     private List<ArticleDTO> getDTO(List<Article> content) {

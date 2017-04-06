@@ -28,23 +28,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .antMatcher("/api/**")
-            .authorizeRequests()
-            .anyRequest()
-            .anonymous()
-            .antMatchers(HttpMethod.POST, "/**")
-            .authenticated()
-            .antMatchers(HttpMethod.PUT, "/**")
-            .authenticated()
-            .antMatchers(HttpMethod.DELETE, "/**")
-            .authenticated()
-            .and()
-            .addFilterBefore(filter, RequestHeaderAuthenticationFilter.class)
-            .authenticationProvider(preAuthProvider())
-            .sessionManagement()
-            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-            .and()
-            .csrf()
-            .disable();
+                .authorizeRequests()
+                .anyRequest()
+                    .permitAll()
+                .antMatchers(HttpMethod.POST, "/**")
+                    .authenticated()
+                .antMatchers(HttpMethod.PUT, "/**")
+                    .authenticated()
+                .antMatchers(HttpMethod.DELETE, "/**")
+                    .authenticated()
+                .and()
+                .addFilterBefore(filter, RequestHeaderAuthenticationFilter.class)
+                .authenticationProvider(preAuthProvider())
+                .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .csrf()
+                .disable();
     }
 
     @Bean
