@@ -32,4 +32,4 @@ export class AuthenticatedHttp extends Http {
   }
 }
 
-export const httpFactory = (backend: XHRBackend, defaultOptions: RequestOptions, store: Store<AppState>) => new AuthenticatedHttp(backend, defaultOptions, store)
+export const httpFactory = (backend: XHRBackend, defaultOptions: RequestOptions, store: Store<AppState>) => new AuthenticatedHttp(backend, defaultOptions, store);

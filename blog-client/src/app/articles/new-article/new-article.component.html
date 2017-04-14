@@ -1,0 +1,45 @@
+<form [formGroup]="form" (submit)="onSubmit(form.value)">
+  <section class="form-block">
+    <label>New article</label>
+    <div class="form-group">
+      <label for="title" class="required">Title</label>
+      <label for="title"
+             aria-haspopup="true"
+             role="tooltip"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="form.get('title').invalid && (form.get('title').dirty || form.get('title').touched)">
+        <input type="text" id="title" required name="title" formControlName="title"
+               maxlength="64" (change)="createSlug(form)">
+        <span class="tooltip-content">
+          The title is a required field
+        </span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="slug" class="required">Slug</label>
+      <span>{{prefix}}</span>
+      <label for="slug"
+             aria-haspopup="true"
+             role="tooltip"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="form.get('slug').invalid && (form.get('slug').dirty || form.get('slug').touched)">
+        <input type="text" id="slug" placeholder="path-to-article" required name="slug" formControlName="slug"
+               maxlength="64">
+        <span class="tooltip-content">
+          The slug is a required field
+        </span>
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="text">Text</label>
+      <textarea id="text" placeholder="Tell your story..." required name="text" formControlName="text"
+                rows="10" maxlength="16384">
+      </textarea>
+      <span>
+        {{form.get('text').value?.length || 0}} / 16384<br />
+        Markdown syntax is supported.
+      </span>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Add</button>
+  </section>
+</form>

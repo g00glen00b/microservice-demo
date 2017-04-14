@@ -9,13 +9,14 @@ import {SharedModule} from '../shared/shared.module';
 import {ArticleDetailComponent} from './article-detail/article-detail.component';
 import {MarkdownModule} from 'angular2-markdown';
 import {ClarityModule} from 'clarity-angular';
-import {ArticleNewComponent} from './article-new/article-new.component';
 import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {NewArticleComponent} from './new-article/new-article.component';
+import {ArticleValidators} from './new-article/article-validators';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
-  {path: 'articles/new', component: ArticleNewComponent, canActivate: [AuthenticatedGuard]},
+  {path: 'articles/new', component: NewArticleComponent, canActivate: [AuthenticatedGuard]},
   {path: 'articles/:slug', component: ArticleDetailComponent}
 ];
 
@@ -26,10 +27,11 @@ const routes: Routes = [
     SharedModule,
     MarkdownModule.forRoot(),
     ClarityModule.forChild(),
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
   ],
-  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, ArticleNewComponent],
-  providers: [ArticleService, MarkdownService]
+  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, NewArticleComponent],
+  providers: [ArticleService, MarkdownService, ArticleValidators]
 })
 export class ArticleModule {
 }
