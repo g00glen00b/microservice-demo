@@ -38,6 +38,13 @@ export class ArticleService {
       .map(response => Article.fromResponse(response));
   }
 
+  update(article: Article): Observable<Article> {
+    return this._authenticatedHttp
+      .put(`${baseUrl}/${article.slug}`, article)
+      .map(response => response.json())
+      .map(response => Article.fromResponse(response));
+  }
+
   remove(article: Article): Observable<void> {
     return this._authenticatedHttp
       .delete(`${baseUrl}/${article.slug}`)
