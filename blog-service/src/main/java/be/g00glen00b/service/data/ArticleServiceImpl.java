@@ -52,6 +52,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional
+    public ArticleDTO update(String slug, @Valid ArticleDTO input) {
+        Article article = repository.findBySlug(slug).orElseThrow(ArticleNotFoundException::new);
+        article.setTitle(input.getTitle());
+        article.setText(input.getText());
+        return ArticleDTO.fromEntity(article);
+    }
+
+    @Override
+    @Transactional
     public void delete(String slug) {
         Article article = repository.findBySlug(slug).orElseThrow(ArticleNotFoundException::new);
         repository.delete(article);
