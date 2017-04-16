@@ -14,6 +14,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.data.jpa.domain.Specifications.where;
 
@@ -43,9 +44,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    @Transactional
     public ArticleDTO save(@Valid ArticleDTO dto) {
         Article entity = new Article(dto.getTitle(), dto.getText(), userService.getUsername(), dto.getSlug(), LocalDateTime.now());
         return ArticleDTO.fromEntity(repository.save(entity));
+    }
+
+    @Override
+    @Transactional
+    public void delete(String slug) {
+        Article article = repository.findBySlug(slug).orElseThrow(ArticleNotFoundException::new);
+        repository.delete(article);
     }
 
     private List<ArticleDTO> getDTO(List<Article> content) {

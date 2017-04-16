@@ -7,6 +7,7 @@ import be.g00glen00b.service.web.model.ArticleDTO;
 import be.g00glen00b.service.web.model.ArticleSort;
 import be.g00glen00b.service.web.model.ArticlesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -41,6 +42,13 @@ public class ArticleController {
         @PathVariable String slug
     ) {
         return service.findOne(slug);
+    }
+
+    @DeleteMapping("/{slug}")
+    public void delete(
+        @PathVariable String slug
+    ) {
+        service.delete(slug);
     }
 
     @PostMapping

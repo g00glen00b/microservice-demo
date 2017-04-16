@@ -9,4 +9,5 @@ public interface ArticleService {
     ArticlesDTO findAll(ArticleQuery query, int offset, int limit, ArticleSort sort);
     ArticleDTO findOne(String slug);
     ArticleDTO save(@Valid ArticleDTO dto);
+    void delete(String slug);
 }
