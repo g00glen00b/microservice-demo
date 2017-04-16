@@ -38,6 +38,12 @@ export class ArticleService {
       .map(response => Article.fromResponse(response));
   }
 
+  remove(article: Article): Observable<void> {
+    return this._authenticatedHttp
+      .delete(`${baseUrl}/${article.slug}`)
+      .map(response => null);
+  }
+
   getExcerpt(article: Article) {
     return _.truncate(this._markdown.strip(article.text), {length: excerptLength});
   }

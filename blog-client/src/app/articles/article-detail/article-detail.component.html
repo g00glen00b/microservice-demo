@@ -1,3 +1,7 @@
 <h1>{{article?.title}}</h1>
 <p class="p2">Posted by {{article?.username}} on {{article?.created | date:'mediumDate'}}</p>
+<div  *ngIf="authenticated">
+  <a href="" class="btn btn-primary"><clr-icon shape="pencil"></clr-icon> Edit article</a>
+  <button class="btn btn-danger-outline" (click)="remove(article)"><clr-icon shape="trash"></clr-icon> Delete article</button>
+</div>
 <markdown [data]="article.text" *ngIf="article != null"></markdown>
