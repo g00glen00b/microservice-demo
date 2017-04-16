@@ -17,7 +17,6 @@ export class ArticleFormComponent implements OnInit, OnChanges {
   constructor(private _fb: FormBuilder, private _validators: ArticleValidators) { }
 
   ngOnInit() {
-    console.log('On init');
     this.prefix = this.getUrlPrefix();
     this.form = this._fb.group({
       title: new FormControl('', Validators.required),

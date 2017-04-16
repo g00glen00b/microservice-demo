@@ -19,4 +19,11 @@ export class EditArticleComponent implements OnInit {
       .subscribe(article => this.article = article);
   }
 
+  update(article: Article) {
+    this.article.text = article.text;
+    this.article.title = article.title;
+    this._service
+      .update(this.article)
+      .subscribe();
+  }
 }
