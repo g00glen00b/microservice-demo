@@ -4,6 +4,7 @@ import * as _ from 'lodash';
 import {ArticleService} from '../article.service';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ArticleValidators} from './article-validators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-new-article',
@@ -12,7 +13,8 @@ import {ArticleValidators} from './article-validators';
 export class NewArticleComponent implements OnInit {
   prefix: string;
   form: FormGroup;
-  constructor(private _service: ArticleService, private _fb: FormBuilder, private _validators: ArticleValidators) { }
+  constructor(private _service: ArticleService, private _fb: FormBuilder, private _validators: ArticleValidators,
+              private _router: Router) { }
 
   ngOnInit() {
     this.prefix = this.getUrlPrefix();
@@ -24,7 +26,7 @@ export class NewArticleComponent implements OnInit {
   }
 
   onSubmit(article: Article) {
-    this._service.save(article).subscribe(article => console.log(article));
+    this._service.save(article).subscribe(() => this._router.navigate(['/articles']));
   }
 
   createSlug(form: FormGroup) {
