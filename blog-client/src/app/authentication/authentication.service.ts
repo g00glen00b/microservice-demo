@@ -46,7 +46,6 @@ export class AuthenticationService {
 
   private dispatchToken(token: string) {
     let claims = this.getClaims(token);
-    console.log(claims);
     if (claims['exp'] < new Date().getTime()/1000) {
       this.logout();
     } else {

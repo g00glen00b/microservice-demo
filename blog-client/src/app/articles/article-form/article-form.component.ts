@@ -12,19 +12,36 @@ export class ArticleFormComponent implements OnInit, OnChanges {
   prefix: string;
   form: FormGroup;
   @Input() article: Article;
+  @Input() title: string;
   @Output() save: EventEmitter<Article> = new EventEmitter<Article>();
   constructor(private _fb: FormBuilder, private _validators: ArticleValidators) { }
 
   ngOnInit() {
+    console.log('On init');
     this.prefix = this.getUrlPrefix();
+    this.form = this._fb.group({
+      title: new FormControl('', Validators.required),
+      slug: new FormControl('', Validators.required, this._validators.uniqueSlug.bind(this._validators)),
+      text: new FormControl('')
+    });
+    this.updateFormValues(this.article);
   }
 
   ngOnChanges() {
-    this.form = this._fb.group({
-      title: new FormControl(this.article == null ? '' : this.article.title, Validators.required),
-      slug: new FormControl(this.article == null ? '' : this.article.slug, Validators.required, this._validators.uniqueSlug.bind(this._validators)),
-      text: new FormControl(this.article == null ? '' : this.article.text)
-    });
+    if (this.form != null) {
+      this.updateFormValues(this.article);
+    }
+  }
+
+  updateFormValues(article: Article) {
+    this.form.get('title').setValue(article == null ? '' : article.title);
+    this.form.get('slug').setValue(article == null ? '' : article.slug);
+    this.form.get('text').setValue(article == null ? '' : article.text);
+    if (article != null && article.id != null) {
+      this.form.get('slug').disable();
+    } else {
+      this.form.get('slug').enable();
+    }
   }
 
   onSubmit(article: Article) {

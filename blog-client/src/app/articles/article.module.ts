@@ -14,10 +14,12 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NewArticleComponent} from './new-article/new-article.component';
 import {ArticleValidators} from './article-form/article-validators';
 import { ArticleFormComponent } from './article-form/article-form.component';
+import { EditArticleComponent } from './edit-article/edit-article.component';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
   {path: 'articles/new', component: NewArticleComponent, canActivate: [AuthenticatedGuard]},
+  {path: 'articles/:slug/edit', component: EditArticleComponent, canActivate: [AuthenticatedGuard]},
   {path: 'articles/:slug', component: ArticleDetailComponent}
 ];
 
@@ -31,7 +33,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, NewArticleComponent, ArticleFormComponent],
+  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, NewArticleComponent, ArticleFormComponent, EditArticleComponent],
   providers: [ArticleService, MarkdownService, ArticleValidators]
 })
 export class ArticleModule {
