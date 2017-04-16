@@ -12,7 +12,8 @@ import {ClarityModule} from 'clarity-angular';
 import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NewArticleComponent} from './new-article/new-article.component';
-import {ArticleValidators} from './new-article/article-validators';
+import {ArticleValidators} from './article-form/article-validators';
+import { ArticleFormComponent } from './article-form/article-form.component';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
@@ -30,7 +31,7 @@ const routes: Routes = [
     FormsModule,
     ReactiveFormsModule,
   ],
-  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, NewArticleComponent],
+  declarations: [ArticlesComponent, ArticleExcerptComponent, ArticleDetailComponent, NewArticleComponent, ArticleFormComponent],
   providers: [ArticleService, MarkdownService, ArticleValidators]
 })
 export class ArticleModule {
