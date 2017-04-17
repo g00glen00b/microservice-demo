@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Article} from '../model/article';
 import {ActivatedRoute} from '@angular/router';
 import {ArticleService} from '../article.service';
-import {Alert, ALERT_ERROR_LEVEL} from '../../shared/alert/alert';
+import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
 import {AppState} from '../../shared/app-state';
 import {Store} from '@ngrx/store';
@@ -29,6 +29,8 @@ export class EditArticleComponent implements OnInit {
     this.article.title = article.title;
     this._service
       .update(this.article)
-      .subscribe();
+      .subscribe(
+        () => this._store.dispatch({type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'The article has been saved')}),
+        () => this._store.dispatch({type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be saved.')}));
   }
 }
