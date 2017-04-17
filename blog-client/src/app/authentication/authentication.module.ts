@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {Store, StoreModule} from '@ngrx/store';
-import {auth} from './auth.reducer';
+import {Store} from '@ngrx/store';
 import {LoginComponent} from './login/login.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
@@ -18,7 +17,6 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    StoreModule.provideStore({ auth }),
     RouterModule.forChild(routes),
     FormsModule
   ],

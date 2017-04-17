@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Store} from '@ngrx/store';
 import {AuthenticationService} from '../../authentication/authentication.service';
 import {Router} from '@angular/router';
-import {AppState} from '../../authentication/app-state';
+import {AppState} from '../app-state';
 
 @Component({
   selector: 'app-navbar',

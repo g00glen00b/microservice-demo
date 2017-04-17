@@ -10,6 +10,9 @@ import {SharedModule} from './shared/shared.module';
 import {ArticleModule} from './articles/article.module';
 import {MarkdownModule} from 'angular2-markdown';
 import {AuthenticationModule} from './authentication/authentication.module';
+import {StoreModule} from '@ngrx/store';
+import {auth} from './authentication/auth.reducer';
+import {appAlert} from './shared/alert/app-alert.reducer';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -23,6 +26,7 @@ const routes: Routes = [
     ReactiveFormsModule,
     HttpModule,
     HttpModule,
+    StoreModule.provideStore({ auth, appAlert }),
     ClarityModule.forRoot(),
     MarkdownModule.forRoot(),
     HomeModule,

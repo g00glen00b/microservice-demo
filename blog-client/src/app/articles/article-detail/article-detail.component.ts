@@ -5,7 +5,9 @@ import {Article} from '../model/article';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/mergeMap';
 import {Store} from '@ngrx/store';
-import {AppState} from '../../authentication/app-state';
+import {AppState} from '../../shared/app-state';
+import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
+import {Alert, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-article-detail',
@@ -31,7 +33,10 @@ export class ArticleDetailComponent implements OnInit {
   remove(article: Article) {
     this._service
       .remove(article)
-      .subscribe(() => this._router.navigate(['/articles']));
+      .subscribe(() => {
+        this._router.navigate(['/articles']);
+        this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'The article has been removed') });
+      });
   }
 
 }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ArticleService} from './article.service';
 import {Articles} from './model/articles';
 import {Store} from '@ngrx/store';
-import {AppState} from '../authentication/app-state';
+import {AppState} from '../shared/app-state';
 
 @Component({
   selector: 'app-articles',

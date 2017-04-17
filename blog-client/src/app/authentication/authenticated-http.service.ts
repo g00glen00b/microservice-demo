@@ -4,7 +4,7 @@ import {
   XHRBackend
 } from '@angular/http';
 import {Observable} from 'rxjs';
-import {AppState} from './app-state';
+import {AppState} from '../shared/app-state';
 import {Store} from '@ngrx/store';
 
 @Injectable()
@@ -30,6 +30,10 @@ export class AuthenticatedHttp extends Http {
     tokenOptions.headers.append('X-Token', this.token);
     return tokenOptions;
   }
+
+  static factory(backend: XHRBackend, defaultOptions: RequestOptions, store: Store<AppState>) {
+    return new AuthenticatedHttp(backend, defaultOptions, store);
+  }
 }
 
-export const httpFactory = (backend: XHRBackend, defaultOptions: RequestOptions, store: Store<AppState>) => new AuthenticatedHttp(backend, defaultOptions, store);
+export const httpFactory = AuthenticatedHttp.factory;

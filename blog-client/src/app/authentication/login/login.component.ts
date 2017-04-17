@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {AuthenticationService} from '../authentication.service';
 import {Store} from '@ngrx/store';
 import {Router} from '@angular/router';
-import {AppState} from '../app-state';
+import {AppState} from '../../shared/app-state';
 
 @Component({
   selector: 'app-login',

@@ -1,0 +1,8 @@
+<div *ngIf="alert.message != null" [ngClass]="alertClass">
+  <button type="button" class="close" aria-label="Close" (click)="dismissAlert()">
+    <clr-icon aria-hidden="true" shape="close"></clr-icon>
+  </button>
+  <div class="alert-item">
+    <span class="alert-text">{{alert.message}}</span>
+  </div>
+</div>
