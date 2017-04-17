@@ -3,6 +3,8 @@ import {ArticleService} from './article.service';
 import {Articles} from './model/articles';
 import {Store} from '@ngrx/store';
 import {AppState} from '../shared/app-state';
+import {Alert, ALERT_ERROR_LEVEL} from '../shared/alert/alert';
+import {ALERT_SENT} from '../shared/alert/app-alert.reducer';
 
 @Component({
   selector: 'app-articles',
@@ -24,7 +26,8 @@ export class ArticlesComponent implements OnInit {
   }
 
   findAll(offset: number, limit: number) {
-    this._service.findAll(offset, limit).subscribe(articles => this.articles = articles);
+    this._service.findAll(offset, limit).subscribe(articles => this.articles = articles,
+      () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The articles could not be retrieved')}));
   }
 
 }

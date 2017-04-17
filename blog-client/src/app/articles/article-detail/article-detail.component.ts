@@ -7,7 +7,7 @@ import 'rxjs/add/operator/mergeMap';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../shared/app-state';
 import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
-import {Alert, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
+import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-article-detail',
@@ -24,7 +24,8 @@ export class ArticleDetailComponent implements OnInit {
     this._route.params
       .map(params => params['slug'])
       .flatMap(slug => this._service.findOne(slug))
-      .subscribe(article => this.article = article);
+      .subscribe(article => this.article = article,
+        () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be retrieved')}));
     this._store
       .select(state => state.auth)
       .subscribe(authentication => this.authenticated = authentication.claims != null);
@@ -36,7 +37,7 @@ export class ArticleDetailComponent implements OnInit {
       .subscribe(() => {
         this._router.navigate(['/articles']);
         this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'The article has been removed') });
-      });
+      }, () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be removed') }));
   }
 
 }
