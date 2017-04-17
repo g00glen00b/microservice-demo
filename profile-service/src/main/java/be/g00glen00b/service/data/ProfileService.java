@@ -96,7 +96,6 @@ public class ProfileService {
         } catch (SQLException ex) {
             throw new ProfileAvatarFailedException("Could not retrieve avatar", ex);
         } finally {
-            IOUtils.closeQuietly(inputStream);
         }
     }
 }
