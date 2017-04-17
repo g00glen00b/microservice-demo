@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="card-block">
+    <div class="card-media-block">
+      <img [src]="profile?.avatar" class="card-media-image">
+      <div class="card-media-description">
+        <span class="card-media-title">{{profile?.username}}</span>
+        <span class="card-media-text">{{profile?.firstname}} {{profile?.lastname}}</span>
+      </div>
+    </div>
+    <div class="card-text">
+      {{profile?.bio}}
+    </div>
+  </div>
+</div>

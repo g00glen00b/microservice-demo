@@ -5,3 +5,4 @@
   <button class="btn btn-danger-outline" (click)="remove(article)"><clr-icon shape="trash"></clr-icon> Delete article</button>
 </div>
 <markdown [data]="article.text" *ngIf="article != null"></markdown>
+<app-profile-card [profile]="profile"></app-profile-card>

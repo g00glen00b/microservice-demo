@@ -15,6 +15,7 @@ import {NewArticleComponent} from './new-article/new-article.component';
 import {ArticleValidators} from './article-form/article-validators';
 import { ArticleFormComponent } from './article-form/article-form.component';
 import { EditArticleComponent } from './edit-article/edit-article.component';
+import {ProfileModule} from '../profiles/profile.module';
 
 const routes: Routes = [
   {path: 'articles', component: ArticlesComponent},
@@ -28,6 +29,7 @@ const routes: Routes = [
     CommonModule,
     RouterModule.forChild(routes),
     SharedModule,
+    ProfileModule,
     MarkdownModule.forRoot(),
     ClarityModule.forChild(),
     FormsModule,

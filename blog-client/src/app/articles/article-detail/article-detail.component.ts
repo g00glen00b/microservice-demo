@@ -8,6 +8,8 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../shared/app-state';
 import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
 import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
+import {ProfileService} from '../../profiles/profile.service';
+import {Profile} from '../../profiles/model/profile';
 
 @Component({
   selector: 'app-article-detail',
@@ -15,16 +17,17 @@ import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/
 })
 export class ArticleDetailComponent implements OnInit {
   article: Article;
+  profile: Profile;
   authenticated: boolean = false;
 
-  constructor(private _route: ActivatedRoute, private _service: ArticleService, private _store: Store<AppState>,
-              private _router: Router) { }
+  constructor(private _route: ActivatedRoute, private _service: ArticleService, private _profileService: ProfileService,
+              private _store: Store<AppState>, private _router: Router) { }
 
   ngOnInit() {
     this._route.params
       .map(params => params['slug'])
       .flatMap(slug => this._service.findOne(slug))
-      .subscribe(article => this.article = article,
+      .subscribe(article => this.updateArticle(article),
         () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be retrieved')}));
     this._store
       .select(state => state.auth)
@@ -40,4 +43,10 @@ export class ArticleDetailComponent implements OnInit {
       }, () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be removed') }));
   }
 
+  private updateArticle(article: Article) {
+    this.article = article;
+    this._profileService.findOne(article.username).subscribe(
+      profile => this.profile = profile,
+      () => this._store.dispatch({type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The profile of the author could not be retrieved')}));
+  }
 }

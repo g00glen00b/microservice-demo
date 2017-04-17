@@ -13,6 +13,7 @@ import {AuthenticationModule} from './authentication/authentication.module';
 import {StoreModule} from '@ngrx/store';
 import {auth} from './authentication/auth.reducer';
 import {appAlert} from './shared/alert/app-alert.reducer';
+import {ProfileModule} from './profiles/profile.module';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full' }
@@ -31,6 +32,7 @@ const routes: Routes = [
     MarkdownModule.forRoot(),
     HomeModule,
     ArticleModule,
+    ProfileModule,
     SharedModule,
     AuthenticationModule,
     RouterModule.forRoot(routes)
