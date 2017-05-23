@@ -10,6 +10,7 @@ import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
 import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 import {ProfileService} from '../../profiles/profile.service';
 import {Profile} from '../../profiles/model/profile';
+import {Authentication} from '../../authentication/authentication';
 
 @Component({
   selector: 'app-article-detail',
@@ -18,7 +19,7 @@ import {Profile} from '../../profiles/model/profile';
 export class ArticleDetailComponent implements OnInit {
   article: Article;
   profile: Profile;
-  authenticated: boolean = false;
+  authentication: Authentication;
 
   constructor(private _route: ActivatedRoute, private _service: ArticleService, private _profileService: ProfileService,
               private _store: Store<AppState>, private _router: Router) { }
@@ -31,7 +32,11 @@ export class ArticleDetailComponent implements OnInit {
         () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, 'The article could not be retrieved')}));
     this._store
       .select(state => state.auth)
-      .subscribe(authentication => this.authenticated = authentication.claims != null);
+      .subscribe(authentication => this.authentication = authentication);
+  }
+
+  isAuthorized(article: Article) {
+    return article != null && article.username == this.authentication.claims.sub;
   }
 
   remove(article: Article) {

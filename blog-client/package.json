@@ -24,6 +24,7 @@
     "@ngrx/core": "^1.2.0",
     "@ngrx/store": "^2.2.1",
     "@types/jwt-decode": "^1.4.28",
+    "@types/lodash": "^4.14.50",
     "@webcomponents/custom-elements": "^1.0.0-alpha.3",
     "angular2-markdown": "^1.5.1",
     "clarity-angular": "^0.8.11",
@@ -38,12 +39,12 @@
     "zone.js": "^0.7.2"
   },
   "devDependencies": {
+    "@angular/cli": "^1.0.0",
     "@angular/compiler-cli": "^2.3.1",
     "@types/jasmine": "2.5.38",
-    "@types/lodash": "^4.14.55",
+    "@types/lodash": "^4.14.50",
     "@types/marked": "0.0.28",
     "@types/node": "^6.0.42",
-    "angular-cli": "1.0.0-beta.25.5",
     "codelyzer": "~2.0.0-beta.1",
     "jasmine-core": "2.5.2",
     "jasmine-spec-reporter": "2.5.0",
