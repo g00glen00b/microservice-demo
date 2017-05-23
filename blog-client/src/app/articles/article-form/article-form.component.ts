@@ -19,9 +19,9 @@ export class ArticleFormComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.prefix = this.getUrlPrefix();
     this.form = this._fb.group({
-      title: new FormControl('', Validators.required),
-      slug: new FormControl('', Validators.required, this._validators.uniqueSlug.bind(this._validators)),
-      text: new FormControl('')
+      title: new FormControl('', [Validators.required, Validators.maxLength(64)]),
+      slug: new FormControl('', [Validators.required, Validators.maxLength(64)], this._validators.uniqueSlug.bind(this._validators)),
+      text: new FormControl('', Validators.maxLength(16384))
     });
     this.updateFormValues(this.article);
   }

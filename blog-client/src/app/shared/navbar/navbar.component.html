@@ -11,12 +11,13 @@
   <div class="header-actions">
     <clr-dropdown clrMenuPosition="bottom-right" *appIsAuthenticated="">
       <button class="nav-icon" clrDropdownToggle>
-        <clr-icon shape="cog"></clr-icon>
+        <clr-icon shape="user"></clr-icon>
         <clr-icon shape="caret down"></clr-icon>
       </button>
       <div class="dropdown-menu">
         <span class="dropdown-item disabled">Welcome {{authentication.claims.sub}}</span>
         <div class="dropdown-divider"></div>
+        <a href="" clrDropdownItem [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">Edit profile</a>
         <a href="" clrDropdownItem (click)="logout($event)">Log out</a>
       </div>
     </clr-dropdown>

@@ -6,10 +6,9 @@
       <label for="title"
              aria-haspopup="true"
              role="tooltip"
-             class="tooltip tooltip-validation tooltip-md"
+             class="tooltip tooltip-validation tooltip-md" maxlength="64"
              [class.invalid]="form.get('title').invalid && (form.get('title').dirty || form.get('title').touched)">
-        <input type="text" id="title" required name="title" formControlName="title"
-               maxlength="64" (change)="createSlug(form)">
+        <input type="text" id="title" required name="title" formControlName="title" (change)="createSlug(form)">
         <span class="tooltip-content">
           The title is a required field
         </span>
@@ -22,9 +21,9 @@
              aria-haspopup="true"
              role="tooltip"
              class="tooltip tooltip-validation tooltip-md"
+             maxlength="64"
              [class.invalid]="form.get('slug').invalid && (form.get('slug').dirty || form.get('slug').touched)">
-        <input type="text" id="slug" placeholder="path-to-article" required name="slug" formControlName="slug"
-               maxlength="64">
+        <input type="text" id="slug" placeholder="path-to-article" required name="slug" formControlName="slug">
         <span class="tooltip-content">
           <span *ngIf="form.get('slug').errors?.required">The slug is a required field</span>
           <span *ngIf="form.get('slug').errors?.uniqueInvalid">There is already an article with this slug</span>
@@ -33,8 +32,8 @@
     </div>
     <div class="form-group">
       <label for="text">Text</label>
-      <textarea id="text" placeholder="Tell your story..." required name="text" formControlName="text"
-                rows="10" maxlength="16384">
+      <textarea id="text" placeholder="Tell your story..." required name="text" formControlName="text" rows="10"
+                maxlength="16384">
       </textarea>
       <span>
         {{form.get('text').value?.length || 0}} / 16384<br />

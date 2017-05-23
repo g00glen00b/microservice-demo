@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +35,11 @@ public class ProfileController {
     @GetMapping("/{username}")
     public ProfileDTO findOne(@PathVariable String username) {
         return service.findOne(username);
+    }
+
+    @PutMapping("/{username}")
+    public ProfileDTO update(@PathVariable String username, @RequestBody ProfileDTO profile) {
+        return service.update(username, profile);
     }
 
     @PutMapping("/{username}/avatar")

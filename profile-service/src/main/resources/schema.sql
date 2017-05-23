@@ -2,8 +2,7 @@ CREATE TABLE IF NOT EXISTS profile (
   username          VARCHAR(32) NOT NULL PRIMARY KEY,
   firstname         VARCHAR(16) NOT NULL,
   lastname          VARCHAR(16) NOT NULL,
-  bio               VARCHAR(256) NOT NULL,
-  email             VARCHAR(64));
+  bio               VARCHAR(256) NOT NULL);
 
 CREATE TABLE IF NOT EXISTS profile_avatar (
   id                INTEGER IDENTITY PRIMARY KEY,

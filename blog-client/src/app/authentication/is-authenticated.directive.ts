@@ -19,10 +19,8 @@ export class IsAuthenticatedDirective implements OnInit {
 
   renderElementOnAuthenticated(auth: Authentication) {
     if (auth.token != null) {
-      console.log('Show');
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
-      console.log('Hide');
       this.viewContainer.clear();
     }
   }

@@ -25,6 +25,10 @@ export class AuthenticatedHttp extends Http {
     return super.post(url, body, this.getTokenOptions(options));
   }
 
+  put(url: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+    return super.put(url, body, this.getTokenOptions(options));
+  }
+
   getTokenOptions(options?: RequestOptionsArgs) {
     let tokenOptions = options == null ? { headers: new Headers() } : options;
     tokenOptions.headers.append('X-Token', this.token);

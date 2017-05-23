@@ -33,7 +33,12 @@ function getAuthentication(token): Authentication {
   if (token == null) {
     return { token: null, claims: null, error: null };
   } else {
-    return { token: token, claims: jwt_decode(token), error: null };
+    const claims = jwt_decode(token);
+    if (claims['exp'] < new Date().getTime()/1000) {
+      return { token: null, claims: null, error: null };
+    } else {
+      return {token: token, claims: jwt_decode(token), error: null};
+    }
   }
 }
 

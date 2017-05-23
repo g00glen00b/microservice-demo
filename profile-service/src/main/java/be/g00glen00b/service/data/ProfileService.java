@@ -8,6 +8,7 @@ import javax.sql.rowset.serial.SerialBlob;
 import be.g00glen00b.service.ProfileAvatarFailedException;
 import be.g00glen00b.service.ProfileAvatarInvalidException;
 import be.g00glen00b.service.ProfileAvatarNotFoundException;
+import be.g00glen00b.service.ProfileInvalidException;
 import be.g00glen00b.service.ProfileNotFoundException;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
@@ -54,8 +55,7 @@ public class ProfileService {
         } else if (!file.getContentType().startsWith("image/")) {
             throw new ProfileAvatarInvalidException("File can only be an image");
         }
-        Profile profile = repository.findOneDetailedOptional(username)
-            .orElseThrow(ProfileNotFoundException::new);
+        Profile profile = repository.findOneDetailedOptional(username).orElseThrow(ProfileNotFoundException::new);
         if (!profile.isCurrentUser()) {
             throw new ProfileAvatarInvalidException("You do not have the permission to change this avatar");
         }
@@ -72,6 +72,19 @@ public class ProfileService {
             throw new ProfileAvatarFailedException("Could not update avatar", ex);
         }
         return getAvatarResponse(profile.getAvatar());
+    }
+
+    @Transactional
+    @PreAuthorize("isAuthenticated()")
+    public ProfileDTO update(String username, ProfileDTO profile) {
+        Profile entity = repository.findOneDetailedOptional(username).orElseThrow(ProfileNotFoundException::new);
+        if (!entity.isCurrentUser()) {
+            throw new ProfileInvalidException("You do not have the permission to change this avatar");
+        }
+        entity.setFirstname(profile.getFirstname());
+        entity.setLastname(profile.getLastname());
+        entity.setBio(profile.getBio());
+        return ProfileDTO.fromEntity(entity);
     }
 
     public ResponseEntity getAvatar(String username) {

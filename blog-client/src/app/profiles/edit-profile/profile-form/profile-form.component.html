@@ -1,0 +1,59 @@
+<form [formGroup]="form" (submit)="onSubmit(form.value)">
+  <section class="form-block">
+    <label>Edit profile</label>
+    <div class="form-group">
+      <label for="username" class="required">Username</label>
+      <input type="text" id="username" required name="username" formControlName="username" maxlength="32">
+    </div>
+  </section>
+  <section class="form-block">
+    <label>Edit avatar</label>
+    <div class="form-group">
+      <label>Current avatar</label>
+      <img [src]="profile?.avatar" class="avatar" />
+    </div>
+    <div class="form-group">
+      <label>Upload avatar</label>
+      <app-file-input id="avatar" (fileChange)="uploadAvatar($event)"></app-file-input>
+    </div>
+    <div>
+      <span>
+        Maximum file size = 1 MB<br />
+        Supported types = PNG, JPG, GIF
+      </span>
+    </div>
+  </section>
+  <section class="form-block">
+    <label>Info</label>
+    <div class="form-group">
+      <label for="firstname">First name</label>
+      <label for="firstname"
+             aria-haspopup="true"
+             role="tooltip" maxlength="16"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="form.get('firstname').invalid && (form.get('firstname').dirty || form.get('firstname').touched)">
+        <input type="text" id="firstname" name="firstname" formControlName="firstname">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="lastname">Last name</label>
+      <label for="lastname"
+             aria-haspopup="true"
+             role="tooltip" maxlength="16"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="form.get('lastname').invalid && (form.get('lastname').dirty || form.get('lastname').touched)">
+        <input type="text" id="lastname" name="lastname" formControlName="lastname">
+      </label>
+    </div>
+    <div class="form-group">
+      <label for="bio">Bio</label>
+      <textarea id="bio" placeholder="Tell something about yourself..." name="bio" formControlName="bio" rows="3"
+                maxlength="256">
+      </textarea>
+      <span>
+        {{form.get('bio').value?.length || 0}} / 256<br />
+      </span>
+    </div>
+    <button class="btn btn-primary" type="submit" [disabled]="form.invalid">Save</button>
+  </section>
+</form>
