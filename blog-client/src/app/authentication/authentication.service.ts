@@ -8,6 +8,7 @@ import 'rxjs/add/operator/do';
 import 'rxjs/add/operator/share';
 import {Observable} from 'rxjs';
 import {Authentication} from './authentication';
+import {environment} from '../../environments/environment';
 
 const tokenKey = 'blog.auth.token';
 
@@ -21,7 +22,7 @@ export class AuthenticationService {
     let headers = new Headers();
     headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
     this._store.dispatch({ type: LOGIN_IN_PROGRESS });
-    let observable = this._http.get('http://localhost:8005/uaa-service/api/token', {headers: headers})
+    let observable = this._http.get(environment.apiUrl + '/uaa-service/api/token', {headers: headers})
       .map(response => response.text())
       .share();
     observable

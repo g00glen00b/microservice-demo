@@ -7,8 +7,9 @@ import {MarkdownService} from './markdown.service';
 import {Article} from './model/article';
 import * as _ from 'lodash';
 import {AuthenticatedHttp} from '../authentication/authenticated-http.service';
+import { environment } from '../../environments/environment';
 
-const baseUrl: string = 'http://localhost:8005/blog-service/api/article';
+const baseUrl: string = environment.apiUrl + '/blog-service/api/article';
 const excerptLength: number = 200;
 
 @Injectable()

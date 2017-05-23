@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {Http} from '@angular/http';
 import {Profile} from './model/profile';
 import {Observable} from 'rxjs/Observable';
+import {environment} from '../../environments/environment';
 
-export const baseUrl: string = 'http://localhost:8005/profile-service/api/profile';
+export const baseUrl: string = environment.apiUrl + '/profile-service/api/profile';
 
 @Injectable()
 export class ProfileService {
