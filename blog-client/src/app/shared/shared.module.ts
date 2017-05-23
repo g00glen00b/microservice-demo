@@ -5,9 +5,10 @@ import {ClarityModule} from 'clarity-angular';
 import {RouterModule} from '@angular/router';
 import { PaginationComponent } from './pagination/pagination.component';
 import { AlertComponent } from './alert/alert.component';
+import {AuthenticationModule} from '../authentication/authentication.module';
 
 @NgModule({
-  imports: [CommonModule, ClarityModule.forChild(), RouterModule],
+  imports: [CommonModule, ClarityModule.forChild(), RouterModule, AuthenticationModule],
   exports: [NavbarComponent, PaginationComponent, AlertComponent],
   declarations: [NavbarComponent, PaginationComponent, AlertComponent]
 })

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {INITIAL_STATE, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {LoginComponent} from './login/login.component';
 import {RouterModule, Routes} from '@angular/router';
 import {AuthenticationService} from './authentication.service';
@@ -9,6 +9,7 @@ import {AuthenticatedGuard} from './authenticated-guard.service';
 import {UnauthenticatedGuard} from './unauthenticated-guard.service';
 import {AuthenticatedHttp, httpFactory} from './authenticated-http.service';
 import {RequestOptions, XHRBackend} from '@angular/http';
+import {IsAuthenticatedDirective} from './is-authenticated.directive';
 
 const routes: Routes = [
   {component: LoginComponent, path: 'login', canActivate: [UnauthenticatedGuard]}
@@ -20,7 +21,10 @@ const routes: Routes = [
     RouterModule.forChild(routes),
     FormsModule
   ],
-  declarations: [LoginComponent],
+  exports: [
+    IsAuthenticatedDirective
+  ],
+  declarations: [LoginComponent, IsAuthenticatedDirective],
   providers: [
     AuthenticationService,
     AuthenticatedGuard,

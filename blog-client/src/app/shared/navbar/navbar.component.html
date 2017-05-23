@@ -9,7 +9,7 @@
     <a [routerLink]="['/articles']" [routerLinkActive]="['active']" class="nav-link nav-text">Articles</a>
   </div>
   <div class="header-actions">
-    <clr-dropdown clrMenuPosition="bottom-right" *ngIf="authentication?.claims != null">
+    <clr-dropdown clrMenuPosition="bottom-right" *appIsAuthenticated="">
       <button class="nav-icon" clrDropdownToggle>
         <clr-icon shape="cog"></clr-icon>
         <clr-icon shape="caret down"></clr-icon>
