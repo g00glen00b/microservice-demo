@@ -1,1 +1,9 @@
-/* You can add global styles to this file, and also import other style files */
+.loading-overlay {
+
+}
+
+.loading-overlay .spinner {
+  position: absolute;
+  top: calc(50% - 63px / 2);
+  left: calc(50% - 63px / 2);
+}

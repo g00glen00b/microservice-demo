@@ -9,7 +9,7 @@ import {SharedModule} from '../shared/shared.module';
 import {ArticleDetailComponent} from './article-detail/article-detail.component';
 import {MarkdownModule} from 'angular2-markdown';
 import {ClarityModule} from 'clarity-angular';
-import {AuthenticatedGuard} from '../authentication/authenticated-guard.service';
+import {AuthenticatedGuard} from '../authentication/guards/authenticated-guard.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {NewArticleComponent} from './new-article/new-article.component';
 import {ArticleValidators} from './article-form/article-validators';

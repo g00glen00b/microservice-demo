@@ -11,7 +11,7 @@ import {ArticleModule} from './articles/article.module';
 import {MarkdownModule} from 'angular2-markdown';
 import {AuthenticationModule} from './authentication/authentication.module';
 import {StoreModule} from '@ngrx/store';
-import {auth} from './authentication/auth.reducer';
+import {auth} from './authentication/reducers/auth.reducer';
 import {appAlert} from './shared/alert/app-alert.reducer';
 import {ProfileModule} from './profiles/profile.module';
 
