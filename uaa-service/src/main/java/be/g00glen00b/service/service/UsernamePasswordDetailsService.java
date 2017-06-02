@@ -18,21 +18,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class UsernamePasswordDetailsService implements UserDetailsService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private UserRepository repository;
+    private UserService userService;
     private TokenService tokenService;
 
     @Autowired
-    public UsernamePasswordDetailsService(UserRepository repository, TokenService tokenService) {
-        this.repository = repository;
+    public UsernamePasswordDetailsService(UserService userService, TokenService tokenService) {
+        this.userService = userService;
         this.tokenService = tokenService;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         logger.debug("Trying to authenticate ", username);
-        return repository.findByUsername(username)
-            .map(this::getUserDetails)
-            .orElseThrow(() -> new UsernameNotFoundException("Username '" + username + "' not found"));
+        try {
+            return getUserDetails(userService.findByUsername(username));
+        } catch (UserNotFoundException ex) {
+            throw new UsernameNotFoundException("Username '" + username + "' not found", ex);
+        }
     }
 
     private TokenUserDetails getUserDetails(User user) {

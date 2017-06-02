@@ -13,9 +13,4 @@ public class AuthorizationRESTController {
     public String getToken(@AuthenticationPrincipal TokenUserDetails principal) {
         return principal.getToken();
     }
-
-    @GetMapping("/user")
-    public TokenUserDetails getUser(@AuthenticationPrincipal TokenUserDetails principal) {
-        return principal;
-    }
 }

@@ -17,6 +17,10 @@ public class Role implements Serializable {
     public Role() {
     }
 
+    public Role(String username, String role) {
+        this(null, username, role);
+    }
+
     public Role(Long id, String username, String role) {
         this.id = id;
         this.username = username;

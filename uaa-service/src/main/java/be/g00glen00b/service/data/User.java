@@ -2,6 +2,7 @@ package be.g00glen00b.service.data;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class User implements Serializable {
     private String username;
     private String password;
     private boolean enabled;
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
     private List<Role> roles;
 
@@ -28,6 +29,10 @@ public class User implements Serializable {
         this.password = password;
         this.enabled = enabled;
         this.roles = roles;
+    }
+
+    public User(String username, String password, boolean enabled, List<Role> roles) {
+        this(null, username, password, enabled, roles);
     }
 
     public User() {
