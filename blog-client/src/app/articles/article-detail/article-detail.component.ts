@@ -36,7 +36,7 @@ export class ArticleDetailComponent implements OnInit {
   }
 
   isAuthorized(article: Article) {
-    return article != null && article.username == this.authentication.claims.sub;
+    return article != null && this.authentication.claims != null && article.username == this.authentication.claims.sub;
   }
 
   remove(article: Article) {

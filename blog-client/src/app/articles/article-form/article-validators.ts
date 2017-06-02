@@ -15,18 +15,24 @@ export class ArticleValidators {
     return this.getUniqueSlugValidation(c.value);
   }
 
-  getUniqueSlugValidation(slug: string): Promise<IUniqueSlugValidationResult> {
-    return new Promise<IUniqueSlugValidationResult>(resolve => {
-      this._service
-        .findOne(slug)
-        .subscribe(() => resolve({ uniqueInvalid: true }), error => {
-          if (error.status == 404) {
-            resolve(null);
-          } else {
-            resolve({ uniqueInvalid: true });
-          }
-        });
-    });
+  getUniqueSlugValidation(debounce: number) {
+    let timeout;
+    return (slug: string) => {
+      clearTimeout(timeout);
+      return new Promise<IUniqueSlugValidationResult>(resolve => {
+        timeout = setTimeout(() => {
+          this._service
+            .findOne(slug)
+            .subscribe(() => resolve({uniqueInvalid: true}), error => {
+              if (error.status == 404) {
+                resolve(null);
+              } else {
+                resolve({uniqueInvalid: true});
+              }
+            });
+        }, debounce);
+      });
+    };
   }
 }
 

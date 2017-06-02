@@ -6,9 +6,9 @@
       <label for="title"
              aria-haspopup="true"
              role="tooltip"
-             class="tooltip tooltip-validation tooltip-md" maxlength="64"
+             class="tooltip tooltip-validation tooltip-md"
              [class.invalid]="form.get('title').invalid && (form.get('title').dirty || form.get('title').touched)">
-        <input type="text" id="title" required name="title" formControlName="title" (change)="createSlug(form)">
+        <input type="text" id="title" required maxlength="64" name="title" formControlName="title" (change)="createSlug(form)">
         <span class="tooltip-content">
           The title is a required field
         </span>
@@ -21,9 +21,8 @@
              aria-haspopup="true"
              role="tooltip"
              class="tooltip tooltip-validation tooltip-md"
-             maxlength="64"
              [class.invalid]="form.get('slug').invalid && (form.get('slug').dirty || form.get('slug').touched)">
-        <input type="text" id="slug" placeholder="path-to-article" required name="slug" formControlName="slug">
+        <input type="text" id="slug" placeholder="path-to-article" required maxlength="64" name="slug" formControlName="slug">
         <span class="tooltip-content">
           <span *ngIf="form.get('slug').errors?.required">The slug is a required field</span>
           <span *ngIf="form.get('slug').errors?.uniqueInvalid">There is already an article with this slug</span>
