@@ -15,7 +15,7 @@
         {{authentication.error}}
       </div>
       <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
-      <a href="..." class="signup">Sign up for an account</a>
+      <a href="" [routerLink]="['/register']" class="signup">Sign up for an account</a>
     </div>
   </form>
 </div>

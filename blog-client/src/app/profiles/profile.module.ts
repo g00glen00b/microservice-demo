@@ -7,9 +7,10 @@ import {Route, RouterModule} from '@angular/router';
 import { ProfileFormComponent } from './edit-profile/profile-form/profile-form.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {SharedModule} from '../shared/shared.module';
+import {AuthenticatedGuard} from '../authentication/guards/authenticated-guard.service';
 
 const routes: Route[] = [
-  { path: 'profile/edit', component: EditProfileComponent }
+  { path: 'profile/edit', component: EditProfileComponent, canActivate: [AuthenticatedGuard] }
 ];
 
 @NgModule({

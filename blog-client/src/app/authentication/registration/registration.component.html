@@ -1,0 +1,44 @@
+<div class="login-wrapper">
+  <form class="login" [formGroup]="form">
+    <label class="title">Blog application</label>
+    <div class="login-group">
+      <label for="username"
+             aria-haspopup="true"
+             role="tooltip"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="isUsernameInvalid()">
+        <input class="username" type="text" id="username" placeholder="Username" required maxlength="64" formControlName="username">
+        <span class="tooltip-content" *ngIf="form.get('username').errors?.required">
+          The username is a required field
+        </span>
+        <span class="tooltip-content" *ngIf="form.get('username').errors?.unique">
+          This username is already taken
+        </span>
+      </label>
+      <div formGroupName="password" class="inner-login-group login-group">
+        <label for="username"
+               aria-haspopup="true"
+               role="tooltip"
+               class="tooltip tooltip-validation tooltip-md" maxlength="64"
+               [class.invalid]="isPasswordInvalid()">
+          <input class="password" type="password" id="password" placeholder="Password" required minlength="6" formControlName="password">
+          <span class="tooltip-content" *ngIf="isPasswordTooShort()">
+            A password should contain at least 6 characters.
+          </span>
+        </label>
+        <label for="password"
+               aria-haspopup="true"
+               role="tooltip"
+               class="tooltip tooltip-validation tooltip-md"
+               [class.invalid]="isPasswordConfirmationInvalid()">
+          <input class="password" type="password" id="password2" placeholder="Repeat password" formControlName="password2">
+          <span class="tooltip-content" *ngIf="isPasswordNotConfirmed()">
+            The passwords do not match.
+          </span>
+        </label>
+      </div>
+      <button type="submit" class="btn btn-primary">Sign up</button>
+      <a href="" [routerLink]="['/login']" class="signup">Back to login</a>
+    </div>
+  </form>
+</div>
