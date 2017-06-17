@@ -1,0 +1,109 @@
+version: '3'
+
+services:
+  uaa-database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4SSW0rd
+      - MYSQL_DATABASE=uaa
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbp4ss
+  uaa-service:
+    image: g00glen00b/uaa-service
+    depends_on:
+      - uaa-database
+    ports:
+      - 8002:8002
+    environment:
+      - DATABASE_HOST=uaa-database
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=uaa
+      - DATABASE_PORT=3306
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - APP_PORT=8002
+      - APP_SECRET=bkr5aI5AAtS5kbwN
+      - APP_STRENGTH=10
+      - APP_MAX_AGE=604800
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container
+  profile-database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4SSW0rd
+      - MYSQL_DATABASE=uaa
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbp4ss
+  profile-service:
+    image: g00glen00b/profile-service
+    depends_on:
+      - profile-database
+    ports:
+      - 8004:8004
+    environment:
+      - DATABASE_HOST=profile-database
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=profiles
+      - DATABASE_PORT=3306
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - APP_PORT=8004
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container
+  blog-database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4SSW0rd
+      - MYSQL_DATABASE=uaa
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbp4ss
+  blog-service:
+    image: g00glen00b/blog-service
+    depends_on:
+      - blog-database
+    ports:
+      - 8003:8003
+    environment:
+      - DATABASE_HOST=blog-database
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=articles
+      - DATABASE_PORT=3306
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - APP_PORT=8003
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container
+  config-service:
+    image: g00glen00b/config-service
+    ports:
+      - 8000:8000
+    environment:
+      - APP_PORT=8000
+      - APP_GIT_URI=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
+      - SPRING_PROFILES_ACTIVE=container
+  discovery-service:
+    image: g00glen00b/discovery-service
+    ports:
+      - 8001:8001
+    environment:
+      - APP_PORT=8001
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - SPRING_PROFILES_ACTIVE=container
+  gateway-service:
+    image: g00glen00b/gateway-service
+    ports:
+      - 8005:8005
+    environment:
+      - APP_PORT=8005
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container
