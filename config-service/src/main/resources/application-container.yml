@@ -1,0 +1,13 @@
+spring:
+  jackson:
+    serialization:
+      indent_output: true
+  cloud:
+    config:
+      server:
+        git:
+          uri: ${APP_GIT_URI}
+          searchPaths: '{application}'
+          timeout: 15
+server:
+  port: ${APP_PORT}
