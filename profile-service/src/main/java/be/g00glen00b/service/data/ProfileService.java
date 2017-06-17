@@ -87,6 +87,17 @@ public class ProfileService {
         return ProfileDTO.fromEntity(entity);
     }
 
+    @Transactional
+    @PreAuthorize("isAuthenticated()")
+    public ProfileDTO save(String username, ProfileDTO profile) {
+        Profile existingUser = repository.findOne(username);
+        if (existingUser != null) {
+            throw new ProfileAlreadyExistsException();
+        }
+        Profile entity = new Profile(profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);
+        return ProfileDTO.fromEntity(repository.saveAndFlush(entity));
+    }
+
     public ResponseEntity getAvatar(String username) {
         Profile profile = repository.findOneDetailedOptional(username)
             .orElseThrow(ProfileNotFoundException::new);

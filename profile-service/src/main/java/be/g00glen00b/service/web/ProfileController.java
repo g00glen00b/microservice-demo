@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +36,11 @@ public class ProfileController {
     @GetMapping("/{username}")
     public ProfileDTO findOne(@PathVariable String username) {
         return service.findOne(username);
+    }
+
+    @PostMapping("/{username}")
+    public ProfileDTO save(@PathVariable String username, @RequestBody ProfileDTO profile) {
+        return service.save(username, profile);
     }
 
     @PutMapping("/{username}")
