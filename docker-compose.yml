@@ -9,7 +9,7 @@ services:
       - MYSQL_USER=dbuser
       - MYSQL_PASSWORD=dbp4ss
   uaa-service:
-    image: g00glen00b/uaa-service
+    image: g00glen00b/uaa-service:latest
     depends_on:
       - uaa-database
     ports:
@@ -30,19 +30,15 @@ services:
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
   profile-database:
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=p4SSW0rd
-      - MYSQL_DATABASE=uaa
+      - MYSQL_DATABASE=profiles
       - MYSQL_USER=dbuser
       - MYSQL_PASSWORD=dbp4ss
   profile-service:
-    image: g00glen00b/profile-service
+    image: g00glen00b/profile-service:latest
     depends_on:
       - profile-database
     ports:
@@ -60,19 +56,15 @@ services:
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
   blog-database:
     image: mysql:latest
     environment:
       - MYSQL_ROOT_PASSWORD=p4SSW0rd
-      - MYSQL_DATABASE=uaa
+      - MYSQL_DATABASE=articles
       - MYSQL_USER=dbuser
       - MYSQL_PASSWORD=dbp4ss
   blog-service:
-    image: g00glen00b/blog-service
+    image: g00glen00b/blog-service:latest
     depends_on:
       - blog-database
     ports:
@@ -90,12 +82,8 @@ services:
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
   config-service:
-    image: g00glen00b/config-service
+    image: g00glen00b/config-service:latest
     ports:
       - 8000:8000
     environment:
@@ -103,12 +91,8 @@ services:
       - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
       - SPRING_PROFILES_ACTIVE=container
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
   discovery-service:
-    image: g00glen00b/discovery-service
+    image: g00glen00b/discovery-service:latest
     ports:
       - 8001:8001
     environment:
@@ -117,12 +101,8 @@ services:
       - CONFIG_PORT=8000
       - SPRING_PROFILES_ACTIVE=container
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
   gateway-service:
-    image: g00glen00b/gateway-service
+    image: g00glen00b/gateway-service:latest
     ports:
       - 8005:8005
     environment:
@@ -133,7 +113,3 @@ services:
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
       - JAVA_OPTIONS=-Xms32m -Xmx128m
-    deploy:
-      resources:
-        limits:
-          memory: 300M
