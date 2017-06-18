@@ -28,7 +28,7 @@ services:
       - SECURITY_TOKEN_MAX_AGE_SECONDS=604800
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
-      - SPRING_PROFILES_ACTIVE=container
+      - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
@@ -58,7 +58,7 @@ services:
       - SERVER_PORT=8004
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
-      - SPRING_PROFILES_ACTIVE=container
+      - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
@@ -88,7 +88,7 @@ services:
       - SERVER_PORT=8003
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
-      - SPRING_PROFILES_ACTIVE=container
+      - SPRING_PROFILES_ACTIVE=container,container-db
       - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
