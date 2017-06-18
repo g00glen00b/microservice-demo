@@ -29,7 +29,7 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
@@ -59,7 +59,7 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
@@ -89,7 +89,7 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
@@ -100,9 +100,9 @@ services:
       - 8000:8000
     environment:
       - SERVER_PORT=8000
-      - SPRING_CLOUD_CONFIG_SERVER_GIT=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
@@ -116,7 +116,7 @@ services:
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
@@ -132,7 +132,7 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
     deploy:
       resources:
         limits:
