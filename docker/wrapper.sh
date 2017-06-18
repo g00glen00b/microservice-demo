@@ -18,4 +18,4 @@ else
     done
 fi
 
-java -Djava.security.egd=file:/dev/./urandom -jar /app.jar
+java -Djava.security.egd=file:/dev/./urandom $JAVA_OPTIONS -jar /app.jar

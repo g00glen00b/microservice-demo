@@ -22,13 +22,18 @@ services:
       - DATABASE_PORT=3306
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
-      - APP_PORT=8002
-      - APP_SECRET=bkr5aI5AAtS5kbwN
-      - APP_STRENGTH=10
-      - APP_MAX_AGE=604800
+      - SERVER_PORT=8002
+      - SECURITY_TOKEN_SECRET=bkr5aI5AAtS5kbwN
+      - SECURITY_PASSWORD_STRENGTH=10
+      - SECURITY_TOKEN_MAX_AGE_SECONDS=604800
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
   profile-database:
     image: mysql:latest
     environment:
@@ -50,10 +55,15 @@ services:
       - DATABASE_PORT=3306
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
-      - APP_PORT=8004
+      - SERVER_PORT=8004
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
   blog-database:
     image: mysql:latest
     environment:
@@ -75,35 +85,55 @@ services:
       - DATABASE_PORT=3306
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
-      - APP_PORT=8003
+      - SERVER_PORT=8003
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
   config-service:
     image: g00glen00b/config-service
     ports:
       - 8000:8000
     environment:
-      - APP_PORT=8000
-      - APP_GIT_URI=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
+      - SERVER_PORT=8000
+      - SPRING_CLOUD_CONFIG_SERVER_GIT=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
   discovery-service:
     image: g00glen00b/discovery-service
     ports:
       - 8001:8001
     environment:
-      - APP_PORT=8001
+      - SERVER_PORT=8001
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
   gateway-service:
     image: g00glen00b/gateway-service
     ports:
       - 8005:8005
     environment:
-      - APP_PORT=8005
+      - SERVER_PORT=8005
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS="-Xms32m -Xmx128m"
+    deploy:
+      resources:
+        limits:
+          memory: 300M
