@@ -11,19 +11,19 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
+    private String username;
     private String role;
 
     public Role() {
     }
 
-    public Role(String email, String role) {
-        this(null, email, role);
+    public Role(String username, String role) {
+        this(null, username, role);
     }
 
-    public Role(Long id, String email, String role) {
+    public Role(Long id, String username, String role) {
         this.id = id;
-        this.email = email;
+        this.username = username;
         this.role = role;
     }
 
@@ -31,8 +31,8 @@ public class Role implements Serializable {
         return id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
     public String getRole() {

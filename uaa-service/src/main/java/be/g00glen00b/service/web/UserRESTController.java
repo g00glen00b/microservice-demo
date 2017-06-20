@@ -26,7 +26,7 @@ public class UserRESTController {
     }
 
     @PostMapping()
-    public String saveUser(@RequestParam String email, @RequestParam String username, @RequestParam String password) {
-        return userService.save(email, username, password);
+    public String saveUser(@RequestParam String username, @RequestParam String password) {
+        return userService.save(username, password);
     }
 }
