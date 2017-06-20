@@ -10,6 +10,7 @@ import be.g00glen00b.service.ProfileAvatarInvalidException;
 import be.g00glen00b.service.ProfileAvatarNotFoundException;
 import be.g00glen00b.service.ProfileInvalidException;
 import be.g00glen00b.service.ProfileNotFoundException;
+import be.g00glen00b.service.web.model.NewProfileDTO;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
 import be.g00glen00b.service.web.model.SimpleProfileDTO;
@@ -89,12 +90,12 @@ public class ProfileService {
 
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ProfileDTO save(String username, ProfileDTO profile) {
-        Profile existingUser = repository.findOne(username);
-        if (existingUser != null) {
-            throw new ProfileAlreadyExistsException();
-        }
-        Profile entity = new Profile(profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);
+    public ProfileDTO save(NewProfileDTO profile) {
+        // Verifying if profile exists
+        repository.findOneOptional(profile.getUsername()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
+        repository.findByEmailOptional(profile.getEmail()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
+
+        Profile entity = new Profile(profile.getEmail(), profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);
         return ProfileDTO.fromEntity(repository.saveAndFlush(entity));
     }
 
@@ -110,7 +111,7 @@ public class ProfileService {
     }
 
     private ResponseEntity getAvatarResponse(ProfileAvatar avatar) {
-        InputStream inputStream = null;
+        InputStream inputStream;
         try {
             inputStream = avatar.getAvatar().getBinaryStream();
             return ResponseEntity.ok()
@@ -119,7 +120,6 @@ public class ProfileService {
                 .body(new InputStreamResource(inputStream));
         } catch (SQLException ex) {
             throw new ProfileAvatarFailedException("Could not retrieve avatar", ex);
-        } finally {
         }
     }
 }

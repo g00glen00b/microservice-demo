@@ -13,13 +13,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 public class Profile {
     @Id
     private String username;
+    private String email;
     private String firstname;
     private String lastname;
     private String bio;
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "profile", cascade = CascadeType.ALL, orphanRemoval = true)
     private ProfileAvatar avatar;
 
-    public Profile(String username, String firstname, String lastname, String bio, ProfileAvatar avatar) {
+    public Profile(String email, String username, String firstname, String lastname, String bio, ProfileAvatar avatar) {
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -28,6 +29,10 @@ public class Profile {
     }
 
     public Profile() {
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public String getUsername() {
