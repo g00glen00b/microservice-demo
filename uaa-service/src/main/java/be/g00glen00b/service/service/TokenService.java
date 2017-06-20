@@ -43,7 +43,8 @@ public class TokenService {
         try {
             return JWT.create()
                 .withIssuer(issuer)
-                .withSubject(user.getUsername())
+                .withSubject(user.getEmail())
+                .withClaim("username", user.getUsername())
                 .withIssuedAt(Date
                     .from(now.atZone(ZoneId.systemDefault())
                         .toInstant()))

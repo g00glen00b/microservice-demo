@@ -23,17 +23,17 @@ public class UserService {
         this.tokenService = tokenService;
     }
 
-    public User findByUsername(String username) {
-        return repository.findByUsername(username).orElseThrow(UserNotFoundException::new);
+    public User findByEmail(String username) {
+        return repository.findByEmail(username).orElseThrow(UserNotFoundException::new);
     }
 
     @Transactional
-    public String save(String username, String password) {
-        if (repository.findByUsername(username).isPresent()) {
+    public String save(String email, String username, String password) {
+        if (repository.findByEmail(username).isPresent()) {
             throw new UsernameTakenException("Username is already taken");
         }
-        Role role = new Role(username, USER_ROLE);
-        User user = repository.saveAndFlush(new User(username, password, true, Collections.singletonList(role)));
+        Role role = new Role(email, USER_ROLE);
+        User user = repository.saveAndFlush(new User(email, username, password, true, Collections.singletonList(role)));
         return tokenService.encode(user);
     }
 }
