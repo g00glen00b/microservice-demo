@@ -39,7 +39,7 @@ public class UsernamePasswordDetailsService implements UserDetailsService {
 
     private TokenUserDetails getUserDetails(User user) {
         return new TokenUserDetails(
-            user.getUsername(),
+            user.getEmail(),
             user.getPassword(),
             tokenService.encode(user),
             user.isEnabled(),

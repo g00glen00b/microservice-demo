@@ -48,18 +48,23 @@ public class ProfileService {
             .orElseThrow(ProfileNotFoundException::new));
     }
 
+    @PreAuthorize("isAuthenticated()")
+    public ProfileDTO findOne() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        return ProfileDTO.fromEntity(repository.findByEmailOptional(email)
+            .orElseThrow(ProfileNotFoundException::new));
+    }
+
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ResponseEntity updateAvatar(String username, MultipartFile file) {
+    public ResponseEntity updateAvatar(MultipartFile file) {
         if (file.getSize() > FILE_SIZE_LIMIT) {
             throw new ProfileAvatarInvalidException("File is too large");
         } else if (!file.getContentType().startsWith("image/")) {
             throw new ProfileAvatarInvalidException("File can only be an image");
         }
-        Profile profile = repository.findOneDetailedOptional(username).orElseThrow(ProfileNotFoundException::new);
-        if (!profile.isCurrentUser()) {
-            throw new ProfileAvatarInvalidException("You do not have the permission to change this avatar");
-        }
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Profile profile = repository.findByEmailOptional(email).orElseThrow(ProfileNotFoundException::new);
         if (profile.getAvatar() != null) {
             profile.getAvatar().setProfile(null);
             profile.setAvatar(null);
@@ -77,11 +82,9 @@ public class ProfileService {
 
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ProfileDTO update(String username, ProfileDTO profile) {
-        Profile entity = repository.findOneDetailedOptional(username).orElseThrow(ProfileNotFoundException::new);
-        if (!entity.isCurrentUser()) {
-            throw new ProfileInvalidException("You do not have the permission to change this avatar");
-        }
+    public ProfileDTO update(ProfileDTO profile) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Profile entity = repository.findByEmailOptional(email).orElseThrow(ProfileNotFoundException::new);
         entity.setFirstname(profile.getFirstname());
         entity.setLastname(profile.getLastname());
         entity.setBio(profile.getBio());
@@ -92,7 +95,6 @@ public class ProfileService {
     @PreAuthorize("isAuthenticated()")
     public ProfileDTO save(NewProfileDTO profile) {
         // Verifying if profile exists
-        repository.findOneOptional(profile.getUsername()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
         repository.findByEmailOptional(profile.getEmail()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
 
         Profile entity = new Profile(profile.getEmail(), profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);

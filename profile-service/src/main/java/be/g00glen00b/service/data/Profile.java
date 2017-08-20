@@ -21,6 +21,7 @@ public class Profile {
     private ProfileAvatar avatar;
 
     public Profile(String email, String username, String firstname, String lastname, String bio, ProfileAvatar avatar) {
+        this.email = email;
         this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -65,9 +66,5 @@ public class Profile {
     }
     public void setAvatar(ProfileAvatar avatar) {
         this.avatar = avatar;
-    }
-
-    public boolean isCurrentUser() {
-        return getUsername().equalsIgnoreCase(SecurityContextHolder.getContext().getAuthentication().getName());
     }
 }

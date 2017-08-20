@@ -39,19 +39,24 @@ public class ProfileController {
         return service.findOne(username);
     }
 
+    @GetMapping("/@me")
+    public ProfileDTO findOne() {
+        return service.findOne();
+    }
+
     @PostMapping()
     public ProfileDTO save(@RequestBody NewProfileDTO profile) {
         return service.save(profile);
     }
 
-    @PutMapping("/{username}")
-    public ProfileDTO update(@PathVariable String username, @RequestBody ProfileDTO profile) {
-        return service.update(username, profile);
+    @PutMapping("/@me")
+    public ProfileDTO update(@RequestBody ProfileDTO profile) {
+        return service.update(profile);
     }
 
-    @PutMapping("/{username}/avatar")
-    public ResponseEntity updateAvatar(@RequestParam MultipartFile avatar, @PathVariable String username) {
-        return service.updateAvatar(username, avatar);
+    @PutMapping("/@me/avatar")
+    public ResponseEntity updateAvatar(@RequestParam MultipartFile avatar) {
+        return service.updateAvatar(avatar);
     }
 
     @GetMapping("/{username}/avatar")

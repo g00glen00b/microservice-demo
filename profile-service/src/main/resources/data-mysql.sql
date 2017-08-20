@@ -1,2 +1,2 @@
 INSERT INTO profile (username, email, firstname, lastname, bio) VALUES
-  ('g00glen00b', 'john.doe@example.org', 'Dimitri', 'Mestdagh', 'Consultant at Cronos and Tech lead at Aquafin. Usually you can find me trying out new libraries and technologies. Loves both Java and JavaScript.');
+  ('g00glen00b', 'me@g00glen00b.be', 'Dimitri', 'Mestdagh', 'Consultant at Cronos and Tech lead at Aquafin. Usually you can find me trying out new libraries and technologies. Loves both Java and JavaScript.');

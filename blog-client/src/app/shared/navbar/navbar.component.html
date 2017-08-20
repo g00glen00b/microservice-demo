@@ -15,7 +15,7 @@
         <clr-icon shape="caret down"></clr-icon>
       </button>
       <div class="dropdown-menu">
-        <span class="dropdown-item disabled">Welcome {{authentication.claims.sub}}</span>
+        <span class="dropdown-item disabled">Welcome {{profile?.username}}</span>
         <div class="dropdown-divider"></div>
         <a href="" clrDropdownItem [routerLink]="['/profile/edit']" [routerLinkActive]="['active']">Edit profile</a>
         <a href="" clrDropdownItem (click)="logout($event)">Log out</a>

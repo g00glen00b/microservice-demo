@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Http, RequestOptions} from '@angular/http';
+import {Http} from '@angular/http';
 import {Profile} from './model/profile';
 import {Observable} from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
@@ -18,16 +18,22 @@ export class ProfileService {
       .map(response => Profile.fromResponse(response));
   }
 
+  findMe(): Observable<Profile> {
+    return this._authenticatedHttp.get(`${baseUrl}/@me`)
+      .map(response => response.json())
+      .map(response => Profile.fromResponse(response));
+  }
+
   updateAvatar(profile: Profile, file: File): Observable<string> {
     const formData = new FormData();
     formData.append('avatar', file);
     const date = new Date();
-    return this._authenticatedHttp.put(`${baseUrl}/${profile.username}/avatar`, formData)
+    return this._authenticatedHttp.put(`${baseUrl}/@me/avatar`, formData)
       .map(() => `${baseUrl}/${profile.username}/avatar?date=${date.getTime()}`);
   }
 
   update(profile: Profile): Observable<Profile> {
-    return this._authenticatedHttp.put(`${baseUrl}/${profile.username}`, profile)
+    return this._authenticatedHttp.put(`${baseUrl}/@me`, profile)
       .map(response => response.json())
       .map(response => Profile.fromResponse(response));
   }

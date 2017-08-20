@@ -9,7 +9,7 @@ import {AppState} from '../../shared/app-state';
   templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-  username: string;
+  email: string;
   password: string;
   rememberMe: boolean;
   authentication;
@@ -23,6 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   onLogin() {
-    this._service.login(this.username, this.password, this.rememberMe).subscribe(() => this._router.navigate(['/home']));
+    this._service.login(this.email, this.password, this.rememberMe).subscribe(() => this._router.navigate(['/home']));
   }
 }

@@ -5,6 +5,7 @@ import {Store} from '@ngrx/store';
 import {Profile} from '../model/profile';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/filter';
 import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
 
@@ -19,8 +20,8 @@ export class EditProfileComponent implements OnInit {
   ngOnInit() {
     this._store
       .select(store => store.auth)
-      .map(auth => auth.claims.sub)
-      .switchMap(username => this._service.findOne(username))
+      .filter(auth => auth.claims != null)
+      .switchMap(auth => this._service.findMe())
       .subscribe(profile => this.profile = profile);
   }
 

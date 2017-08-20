@@ -2,8 +2,8 @@
   <form class="login" #loginForm="ngForm" (ngSubmit)="onLogin()">
     <label class="title">Blog Application</label>
     <div class="login-group">
-      <input class="username" type="text" name="username" placeholder="Username" [(ngModel)]="username" required
-             maxlength="64">
+      <input class="username" type="email" name="email" placeholder="Email" [(ngModel)]="email" required
+             maxlength="128">
       <input class="password" type="password" name="password" placeholder="Password" [(ngModel)]="password" required>
       <div class="checkbox">
         <input type="checkbox" id="rememberme" [(ngModel)]="rememberMe" name="rememberMe">
