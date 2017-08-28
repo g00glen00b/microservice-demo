@@ -1,7 +1,7 @@
 import {FormControl, FormGroup} from '@angular/forms';
 import {ProfileService} from '../../profiles/profile.service';
 
-export class PasswordValidators {
+export class AuthenticationValidators {
 
   public static confirmation(group: FormGroup) {
     if (group.get('password').value == group.get('password2').value) {
@@ -24,4 +24,14 @@ export class PasswordValidators {
       });
     };
   }
+
+  public static validateEmail(control: FormControl) {
+     if (EMAIL_REGEX.test(control.value)) {
+       return null;
+     } else {
+       return { email: true };
+     }
+  }
 }
+
+export const EMAIL_REGEX: RegExp = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
