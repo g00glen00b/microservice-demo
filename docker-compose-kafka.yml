@@ -1,0 +1,12 @@
+version: '3'
+services:
+  kafka:
+    image: spotify/kafka
+    ports:
+      - 2181:2181
+      - 9092:9092
+      - 7209:7209
+    environment:
+      JMX_PORT: 7209
+      ADVERTISED_HOST: localhost
+      ADVERTISED_PORT: 9092
