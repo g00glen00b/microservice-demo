@@ -8,6 +8,7 @@ import 'rxjs/add/operator/share';
 import {Observable} from 'rxjs';
 import {Authentication} from './authentication';
 import {environment} from '../../environments/environment';
+import {Registration} from './registration';
 
 @Injectable()
 export class AuthenticationService {
@@ -15,9 +16,9 @@ export class AuthenticationService {
   constructor(private _store: Store<Authentication>, private _http: Http) {
   }
 
-  login(username: string, password: string, rememberMe: boolean): Observable<string> {
+  login(email: string, password: string, rememberMe: boolean): Observable<string> {
     let headers = new Headers();
-    headers.append('Authorization', 'Basic ' + btoa(username + ':' + password));
+    headers.append('Authorization', 'Basic ' + btoa(email + ':' + password));
     this._store.dispatch({ type: LOGIN_IN_PROGRESS });
     let observable = this._http.get(environment.apiUrl + '/uaa-service/api/token', {headers: headers})
       .map(response => response.text())
@@ -26,6 +27,15 @@ export class AuthenticationService {
       token => this._store.dispatch({ type: LOGIN, payload: { token: token, rememberMe: rememberMe }}),
       err => this._store.dispatch({ type: LOGIN_FAILED, payload: { message: this.getMessage(err) } }));
     return observable;
+  }
+
+  signup(email: string, username: string, password: string): Observable<Registration> {
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/x-www-form-urlencoded');
+    return this._http
+      .post(environment.apiUrl + '/registration-service/api/user', `email=${email}&username=${username}&password=${password}`, {headers: headers})
+      .map(response => response.json())
+      .map(response => Registration.fromResponse(response));
   }
 
   logout() {
