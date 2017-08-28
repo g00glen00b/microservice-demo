@@ -4,12 +4,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
+import javax.annotation.PostConstruct;
 import javax.sql.rowset.serial.SerialBlob;
 import be.g00glen00b.service.ProfileAvatarFailedException;
 import be.g00glen00b.service.ProfileAvatarInvalidException;
 import be.g00glen00b.service.ProfileAvatarNotFoundException;
 import be.g00glen00b.service.ProfileInvalidException;
 import be.g00glen00b.service.ProfileNotFoundException;
+import be.g00glen00b.service.model.NewUser;
+import be.g00glen00b.service.model.Registration;
 import be.g00glen00b.service.web.model.NewProfileDTO;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
@@ -30,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProfileService {
     private static final long FILE_SIZE_LIMIT = 1024 * 1024; // 1 Mb
     private ProfileRepository repository;
+    private Registration registration;
 
     @Autowired
     public ProfileService(ProfileRepository repository) {
@@ -110,6 +114,14 @@ public class ProfileService {
         } else {
             throw new ProfileAvatarNotFoundException("User does not have an avatar");
         }
+    }
+
+    @PostConstruct
+    public void register() {
+        registration.newUserRequest().subscribe(message -> {
+            NewUser payload = (NewUser) message.getPayload();
+            save(new NewProfileDTO(payload.getEmail(), payload.getUsername(), null, null, null));
+        });
     }
 
     private ResponseEntity getAvatarResponse(ProfileAvatar avatar) {
