@@ -1,17 +1,22 @@
 package be.g00glen00b.service;
 
+import be.g00glen00b.service.model.Registration;
 import be.g00glen00b.service.model.TokenProperties;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableBinding(Registration.class)
+@EnableScheduling
 public class UaaServiceApplication {
 
     public static void main(String[] args) {
