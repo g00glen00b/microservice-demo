@@ -1,9 +1,12 @@
 package be.g00glen00b.service.service;
 
 import java.util.Collections;
+import javax.annotation.PostConstruct;
 import be.g00glen00b.service.data.Role;
 import be.g00glen00b.service.data.User;
 import be.g00glen00b.service.data.UserRepository;
+import be.g00glen00b.service.model.NewUser;
+import be.g00glen00b.service.model.Registration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,12 +18,14 @@ public class UserService {
     private UserRepository repository;
     private PasswordEncoder passwordEncoder;
     private TokenService tokenService;
+    private Registration registration;
 
     @Autowired
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, TokenService tokenService) {
+    public UserService(UserRepository repository, PasswordEncoder passwordEncoder, TokenService tokenService, Registration registration) {
         this.repository = repository;
         this.passwordEncoder = passwordEncoder;
         this.tokenService = tokenService;
+        this.registration = registration;
     }
 
     public User findByUsername(String username) {
@@ -35,5 +40,13 @@ public class UserService {
         Role role = new Role(email, USER_ROLE);
         User user = repository.saveAndFlush(new User(email, passwordEncoder.encode(password), true, Collections.singletonList(role)));
         return tokenService.encode(user);
+    }
+
+    @PostConstruct
+    public void register() {
+        registration.newUserRequest().subscribe(message -> {
+            NewUser payload = (NewUser) message.getPayload();
+            save(payload.getEmail(), payload.getPassword());
+        });
     }
 }
