@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {PasswordValidators} from './password-validators';
+import {AuthenticationValidators} from './password-validators';
 import {ProfileService} from '../../profiles/profile.service';
+import {AuthenticationService} from '../authentication.service';
+import {AppState} from '../../shared/app-state';
+import {Store} from '@ngrx/store';
+import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
+import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
 
 @Component({
   selector: 'app-registration',
@@ -11,17 +16,18 @@ import {ProfileService} from '../../profiles/profile.service';
 export class RegistrationComponent implements OnInit {
   form: FormGroup;
 
-  constructor(private _fb: FormBuilder, private _profileService: ProfileService) { }
+  constructor(private _fb: FormBuilder, private _profileService: ProfileService, private _authService: AuthenticationService, private _store: Store<AppState>) { }
 
   ngOnInit() {
     this.form = this._fb.group({
+      email: new FormControl('', [Validators.required, Validators.maxLength(128), AuthenticationValidators.validateEmail]),
       username: new FormControl('',
-        [Validators.required, Validators.maxLength(64)],
-        [PasswordValidators.uniqueUsername(this._profileService, 300)]),
+        [Validators.required, Validators.maxLength(32)],
+        [AuthenticationValidators.uniqueUsername(this._profileService, 300)]),
       password: new FormGroup({
         password: new FormControl('', [Validators.required, Validators.minLength(6)]),
         password2: new FormControl('', [Validators.required, Validators.minLength(6)])
-      }, PasswordValidators.confirmation)
+      }, AuthenticationValidators.confirmation)
     });
   }
 
@@ -51,4 +57,11 @@ export class RegistrationComponent implements OnInit {
     return errors != null && errors['confirmation'];
   }
 
+  signup(form: FormGroup) {
+    this._authService
+      .signup(form['email'], form['username'], form['password'])
+      .subscribe(
+        () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'Your account has been created, you can now log in.')}),
+        err => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, err['message'])}));
+  }
 }

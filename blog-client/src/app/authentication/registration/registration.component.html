@@ -1,13 +1,21 @@
 <div class="login-wrapper">
-  <form class="login" [formGroup]="form">
+  <form class="login" [formGroup]="form" (submit)="signup(form)">
     <label class="title">Blog application</label>
     <div class="login-group">
+      <label for="email"
+             role="tooltip"
+             class="tooltip tooltip-validation tooltip-md"
+             [class.invalid]="isEmailInvalid()">
+        <input class="username" id="email" type="email" placeholder="Email" required maxlength="128" formControlName="email">
+        <span class="tooltip-content" *ngIf="form.get('email').errors?.required">
+          The username is a required field
+        </span>
+      </label>
       <label for="username"
-             aria-haspopup="true"
              role="tooltip"
              class="tooltip tooltip-validation tooltip-md"
              [class.invalid]="isUsernameInvalid()">
-        <input class="username" type="text" id="username" placeholder="Username" required maxlength="64" formControlName="username">
+        <input class="username" id="username" placeholder="Username" required maxlength="32" formControlName="username">
         <span class="tooltip-content" *ngIf="form.get('username').errors?.required">
           The username is a required field
         </span>
@@ -16,8 +24,7 @@
         </span>
       </label>
       <div formGroupName="password" class="inner-login-group login-group">
-        <label for="username"
-               aria-haspopup="true"
+        <label for="password"
                role="tooltip"
                class="tooltip tooltip-validation tooltip-md" maxlength="64"
                [class.invalid]="isPasswordInvalid()">
@@ -26,8 +33,7 @@
             A password should contain at least 6 characters.
           </span>
         </label>
-        <label for="password"
-               aria-haspopup="true"
+        <label for="password2"
                role="tooltip"
                class="tooltip tooltip-validation tooltip-md"
                [class.invalid]="isPasswordConfirmationInvalid()">
@@ -37,7 +43,7 @@
           </span>
         </label>
       </div>
-      <button type="submit" class="btn btn-primary">Sign up</button>
+      <button class="btn btn-primary">Sign up</button>
       <a href="" [routerLink]="['/login']" class="signup">Back to login</a>
     </div>
   </form>

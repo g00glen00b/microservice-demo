@@ -14,7 +14,7 @@
       <div class="error active" *ngIf="authentication?.error != null">
         {{authentication.error}}
       </div>
-      <button type="submit" class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
+      <button class="btn btn-primary" [disabled]="!loginForm.valid">LOG IN</button>
       <a href="" [routerLink]="['/register']" class="signup">Sign up for an account</a>
     </div>
   </form>
