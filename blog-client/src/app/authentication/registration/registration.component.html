@@ -15,7 +15,7 @@
              role="tooltip"
              class="tooltip tooltip-validation tooltip-md"
              [class.invalid]="isUsernameInvalid()">
-        <input class="username" id="username" placeholder="Username" required maxlength="32" formControlName="username">
+        <input class="username" id="username" type="text" placeholder="Username" required maxlength="32" formControlName="username">
         <span class="tooltip-content" *ngIf="form.get('username').errors?.required">
           The username is a required field
         </span>

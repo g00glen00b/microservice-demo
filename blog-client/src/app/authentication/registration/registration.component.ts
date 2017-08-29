@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {AuthenticationValidators} from './password-validators';
 import {ProfileService} from '../../profiles/profile.service';
 import {AuthenticationService} from '../authentication.service';
 import {AppState} from '../../shared/app-state';
 import {Store} from '@ngrx/store';
 import {ALERT_SENT} from '../../shared/alert/app-alert.reducer';
 import {Alert, ALERT_ERROR_LEVEL, ALERT_SUCCESS_LEVEL} from '../../shared/alert/alert';
+import {AuthenticationValidators} from './authentication-validators';
 
 @Component({
   selector: 'app-registration',
@@ -45,6 +45,11 @@ export class RegistrationComponent implements OnInit {
     const group = this.form.get('password'),
           field = group.get('password2');
     return (group.invalid && !this.isPasswordInvalid()) && (field.dirty || field.touched);
+  }
+
+  isEmailInvalid(): boolean {
+    const field = this.form.get('email');
+    return field.invalid && (field.dirty || field.touched);
   }
 
   isPasswordTooShort(): boolean {
