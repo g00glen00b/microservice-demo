@@ -2,6 +2,7 @@ package be.g00glen00b.service.data;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,6 +11,7 @@ import javax.persistence.OneToOne;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 @Entity
+@EntityListeners(ProfileRegistrationListener.class)
 public class Profile {
     @Id
     private String username;

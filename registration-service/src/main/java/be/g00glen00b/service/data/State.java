@@ -17,6 +17,9 @@ public class State {
     private boolean uaa;
     private LocalDateTime created;
 
+    public State() {
+    }
+
     public State(Long id, String email, String username, boolean profile, boolean uaa, LocalDateTime created) {
         this.id = id;
         this.email = email;

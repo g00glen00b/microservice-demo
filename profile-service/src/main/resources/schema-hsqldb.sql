@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS profile (
   username          VARCHAR(32) NOT NULL PRIMARY KEY,
   email             VARCHAR(128) UNIQUE NOT NULL,
-  firstname         VARCHAR(16) NOT NULL,
-  lastname          VARCHAR(16) NOT NULL,
-  bio               VARCHAR(256) NOT NULL);
+  firstname         VARCHAR(16),
+  lastname          VARCHAR(16),
+  bio               VARCHAR(256));
 
 CREATE TABLE IF NOT EXISTS profile_avatar (
   id                INTEGER IDENTITY PRIMARY KEY,

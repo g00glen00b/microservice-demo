@@ -9,7 +9,6 @@ import javax.sql.rowset.serial.SerialBlob;
 import be.g00glen00b.service.ProfileAvatarFailedException;
 import be.g00glen00b.service.ProfileAvatarInvalidException;
 import be.g00glen00b.service.ProfileAvatarNotFoundException;
-import be.g00glen00b.service.ProfileInvalidException;
 import be.g00glen00b.service.ProfileNotFoundException;
 import be.g00glen00b.service.model.NewUser;
 import be.g00glen00b.service.model.Registration;
@@ -17,7 +16,6 @@ import be.g00glen00b.service.web.model.NewProfileDTO;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
 import be.g00glen00b.service.web.model.SimpleProfileDTO;
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.data.domain.Page;
@@ -36,8 +34,9 @@ public class ProfileService {
     private Registration registration;
 
     @Autowired
-    public ProfileService(ProfileRepository repository) {
+    public ProfileService(ProfileRepository repository, Registration registration) {
         this.repository = repository;
+        this.registration = registration;
     }
 
     public ProfilesDTO findAll(int offset, int limit) {

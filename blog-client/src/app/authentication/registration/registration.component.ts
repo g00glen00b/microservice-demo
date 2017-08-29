@@ -64,9 +64,9 @@ export class RegistrationComponent implements OnInit {
 
   signup(form: FormGroup) {
     this._authService
-      .signup(form['email'], form['username'], form['password'])
+      .signup(form.get('email').value, form.get('username').value, form.get('password').get('password').value)
       .subscribe(
         () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'Your account has been created, you can now log in.')}),
-        err => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, err['message'])}));
+        err => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, err.json()['message'])}));
   }
 }
