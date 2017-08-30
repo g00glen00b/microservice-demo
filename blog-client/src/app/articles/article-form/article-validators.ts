@@ -1,28 +1,20 @@
-import {AbstractControl} from '@angular/forms';
+import {AbstractControl, FormControl} from '@angular/forms';
 import {ArticleService} from '../article.service';
 import {Injectable} from '@angular/core';
 
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-@Injectable()
 export class ArticleValidators {
 
-  constructor(private _service: ArticleService) {
-  }
-
-  uniqueSlug(c: AbstractControl): { [key: string]: any; } {
-    return this.getUniqueSlugValidation(c.value);
-  }
-
-  getUniqueSlugValidation(debounce: number) {
+  public static uniqueSlug(service: ArticleService, debounce: number) {
     let timeout;
-    return (slug: string) => {
+    return (control: FormControl) => {
       clearTimeout(timeout);
-      return new Promise<IUniqueSlugValidationResult>(resolve => {
+      return new Promise((resolve) => {
         timeout = setTimeout(() => {
-          this._service
-            .findOne(slug)
+          service
+            .findOne(control.value)
             .subscribe(() => resolve({uniqueInvalid: true}), error => {
               if (error.status == 404) {
                 resolve(null);
@@ -34,8 +26,4 @@ export class ArticleValidators {
       });
     };
   }
-}
-
-export interface IUniqueSlugValidationResult {
-  uniqueInvalid: boolean;
 }

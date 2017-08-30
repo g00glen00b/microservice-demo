@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {ArticleValidators} from './article-validators';
 import {Article} from '../model/article';
 import * as _ from 'lodash';
+import {ArticleService} from '../article.service';
 
 @Component({
   selector: 'app-article-form',
@@ -14,13 +15,13 @@ export class ArticleFormComponent implements OnInit, OnChanges {
   @Input() article: Article;
   @Input() title: string;
   @Output() save: EventEmitter<Article> = new EventEmitter<Article>();
-  constructor(private _fb: FormBuilder, private _validators: ArticleValidators) { }
+  constructor(private _fb: FormBuilder, private _service: ArticleService) { }
 
   ngOnInit() {
     this.prefix = this.getUrlPrefix();
     this.form = this._fb.group({
       title: new FormControl('', [Validators.required, Validators.maxLength(64)]),
-      slug: new FormControl('', [Validators.required, Validators.maxLength(64)], this._validators.uniqueSlug.bind(this._validators)),
+      slug: new FormControl('', [Validators.required, Validators.maxLength(64)], [ArticleValidators.uniqueSlug(this._service, 300)]),
       text: new FormControl('', Validators.maxLength(16384))
     });
     this.updateFormValues(this.article);
