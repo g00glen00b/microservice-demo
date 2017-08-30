@@ -43,7 +43,27 @@
           </span>
         </label>
       </div>
-      <button class="btn btn-primary">Sign up</button>
+      <div class="alert alert-success" *ngIf="success">
+        <div class="alert-items">
+          <div class="alert-item">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="check-circle"></clr-icon>
+            </div>
+            <span class="alert-text">Your account is being created. You'll receive an email shortly.</span>
+          </div>
+        </div>
+      </div>
+      <div class="alert alert-danger" *ngIf="error != null">
+        <div class="alert-items">
+          <div class="alert-item">
+            <div class="alert-icon-wrapper">
+              <clr-icon class="alert-icon" shape="exclamation-circle"></clr-icon>
+            </div>
+            <span class="alert-text">{{error}}</span>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary" [disabled]="!form.valid">Sign up</button>
       <a href="" [routerLink]="['/login']" class="signup">Back to login</a>
     </div>
   </form>

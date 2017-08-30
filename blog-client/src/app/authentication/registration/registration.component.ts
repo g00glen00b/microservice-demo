@@ -15,8 +15,9 @@ import {AuthenticationValidators} from './authentication-validators';
 })
 export class RegistrationComponent implements OnInit {
   form: FormGroup;
-
-  constructor(private _fb: FormBuilder, private _profileService: ProfileService, private _authService: AuthenticationService, private _store: Store<AppState>) { }
+  error: string;
+  success: boolean;
+  constructor(private _fb: FormBuilder, private _profileService: ProfileService, private _authService: AuthenticationService) { }
 
   ngOnInit() {
     this.form = this._fb.group({
@@ -63,10 +64,12 @@ export class RegistrationComponent implements OnInit {
   }
 
   signup(form: FormGroup) {
+    this.success = false;
+    this.error = null;
     this._authService
       .signup(form.get('email').value, form.get('username').value, form.get('password').get('password').value)
       .subscribe(
-        () => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_SUCCESS_LEVEL, 'Your account has been created, you can now log in.')}),
-        err => this._store.dispatch({ type: ALERT_SENT, payload: new Alert(ALERT_ERROR_LEVEL, err.json()['message'])}));
+        () => this.success = true,
+        err => this.error = err.status >= 500 ? 'An internal server error occured, try again later.' : err.json()['message']);
   }
 }

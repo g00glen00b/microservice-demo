@@ -11,6 +11,7 @@ import {AuthenticatedHttp, httpFactory} from './authenticated-http.service';
 import {RequestOptions, XHRBackend} from '@angular/http';
 import {IsAuthenticatedDirective} from './is-authenticated.directive';
 import { RegistrationComponent } from './registration/registration.component';
+import {ClarityModule} from 'clarity-angular';
 
 const routes: Routes = [
   {component: LoginComponent, path: 'login', canActivate: [UnauthenticatedGuard]},
@@ -21,6 +22,7 @@ const routes: Routes = [
   imports: [
     CommonModule,
     RouterModule.forChild(routes),
+    ClarityModule.forChild(),
     FormsModule,
     ReactiveFormsModule
   ],
