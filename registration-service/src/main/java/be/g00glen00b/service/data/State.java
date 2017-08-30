@@ -2,11 +2,13 @@ package be.g00glen00b.service.data;
 
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+@EntityListeners(StateUpdateListener.class)
 public class State {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

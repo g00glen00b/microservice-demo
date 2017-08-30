@@ -48,10 +48,4 @@ public class StateService {
         state.setProfile(profile);
         return state;
     }
-
-    @PostConstruct
-    public void handleEvents() {
-        registration.newUserUaaCompleted().subscribe(message -> updateUaa((String) message.getPayload(), true));
-        registration.newUserProfileCompleted().subscribe(message -> updateProfile((String) message.getPayload(), true));
-    }
 }
