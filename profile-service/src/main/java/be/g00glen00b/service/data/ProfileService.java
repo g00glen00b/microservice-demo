@@ -12,7 +12,7 @@ import be.g00glen00b.service.ProfileAvatarNotFoundException;
 import be.g00glen00b.service.ProfileNotFoundException;
 import be.g00glen00b.service.model.NewUser;
 import be.g00glen00b.service.model.Registration;
-import be.g00glen00b.service.web.model.NewProfileDTO;
+import be.g00glen00b.service.security.service.UserService;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
 import be.g00glen00b.service.web.model.SimpleProfileDTO;
@@ -22,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,11 +31,13 @@ public class ProfileService {
     private static final long FILE_SIZE_LIMIT = 1024 * 1024; // 1 Mb
     private ProfileRepository repository;
     private Registration registration;
+    private UserService userService;
 
     @Autowired
-    public ProfileService(ProfileRepository repository, Registration registration) {
+    public ProfileService(ProfileRepository repository, Registration registration, UserService userService) {
         this.repository = repository;
         this.registration = registration;
+        this.userService = userService;
     }
 
     public ProfilesDTO findAll(int offset, int limit) {
@@ -53,8 +54,7 @@ public class ProfileService {
 
     @PreAuthorize("isAuthenticated()")
     public ProfileDTO findOne() {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        return ProfileDTO.fromEntity(repository.findByEmailOptional(email)
+        return ProfileDTO.fromEntity(repository.findOneOptional(userService.getUsername())
             .orElseThrow(ProfileNotFoundException::new));
     }
 
@@ -66,8 +66,7 @@ public class ProfileService {
         } else if (!file.getContentType().startsWith("image/")) {
             throw new ProfileAvatarInvalidException("File can only be an image");
         }
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Profile profile = repository.findByEmailOptional(email).orElseThrow(ProfileNotFoundException::new);
+        Profile profile = repository.findOneOptional(userService.getUsername()).orElseThrow(ProfileNotFoundException::new);
         if (profile.getAvatar() != null) {
             profile.getAvatar().setProfile(null);
             profile.setAvatar(null);
@@ -86,8 +85,7 @@ public class ProfileService {
     @Transactional
     @PreAuthorize("isAuthenticated()")
     public ProfileDTO update(ProfileDTO profile) {
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Profile entity = repository.findByEmailOptional(email).orElseThrow(ProfileNotFoundException::new);
+        Profile entity = repository.findOneOptional(userService.getUsername()).orElseThrow(ProfileNotFoundException::new);
         entity.setFirstname(profile.getFirstname());
         entity.setLastname(profile.getLastname());
         entity.setBio(profile.getBio());
@@ -96,11 +94,11 @@ public class ProfileService {
 
     @Transactional
     @PreAuthorize("isAuthenticated()")
-    public ProfileDTO save(NewProfileDTO profile) {
+    public ProfileDTO save(ProfileDTO profile) {
         // Verifying if profile exists
-        repository.findByEmailOptional(profile.getEmail()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
+        repository.findOneOptional(profile.getUsername()).ifPresent(found -> {throw new ProfileAlreadyExistsException();});
 
-        Profile entity = new Profile(profile.getEmail(), profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);
+        Profile entity = new Profile(profile.getUsername(), profile.getFirstname(), profile.getLastname(), profile.getBio(), null);
         return ProfileDTO.fromEntity(repository.saveAndFlush(entity));
     }
 
@@ -119,7 +117,7 @@ public class ProfileService {
     public void register() {
         registration.newUserRequest().subscribe(message -> {
             NewUser payload = (NewUser) message.getPayload();
-            save(new NewProfileDTO(payload.getEmail(), payload.getUsername(), null, null, null));
+            save(new ProfileDTO(payload.getUsername(), null, null, null));
         });
     }
 

@@ -1,7 +1,6 @@
 package be.g00glen00b.service.web;
 
 import be.g00glen00b.service.data.ProfileService;
-import be.g00glen00b.service.web.model.NewProfileDTO;
 import be.g00glen00b.service.web.model.ProfileDTO;
 import be.g00glen00b.service.web.model.ProfilesDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +44,7 @@ public class ProfileController {
     }
 
     @PostMapping()
-    public ProfileDTO save(@RequestBody NewProfileDTO profile) {
+    public ProfileDTO save(@RequestBody ProfileDTO profile) {
         return service.save(profile);
     }
 

@@ -43,8 +43,8 @@ public class StateService {
     }
 
     @Transactional
-    public State updateProfile(String email, boolean profile) {
-        State state = repository.findOneByEmail(email).orElseThrow(StateNotFoundException::new);
+    public State updateProfile(String username, boolean profile) {
+        State state = repository.findOneByUsername(username).orElseThrow(StateNotFoundException::new);
         state.setProfile(profile);
         return state;
     }

@@ -13,7 +13,7 @@ public class ProfileRegistrationListener {
 
     @PostPersist
     public void register(Profile user) {
-        getRegistration().newUserProfileCompleted().send(MessageBuilder.withPayload(user.getEmail()).build());
+        getRegistration().newUserProfileCompleted().send(MessageBuilder.withPayload(user.getUsername()).build());
     }
 
     private Registration getRegistration() {
