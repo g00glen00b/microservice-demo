@@ -4,6 +4,7 @@ import java.util.Set;
 
 public class UserObject {
     private String username;
+    private String profileName;
     private boolean enabled;
     private String token;
     private Set<AuthorityObject> authorities;
@@ -16,6 +17,13 @@ public class UserObject {
     }
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public String getProfileName() {
+        return profileName;
+    }
+    public void setProfileName(String profileName) {
+        this.profileName = profileName;
     }
 
     public boolean isEnabled() {

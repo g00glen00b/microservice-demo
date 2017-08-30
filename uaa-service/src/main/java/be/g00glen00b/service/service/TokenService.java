@@ -56,6 +56,7 @@ public class TokenService {
                     .stream()
                     .map(Role::getRole)
                     .toArray(String[]::new))
+                .withClaim("usr", user.getUsername())
                 .sign(algorithm);
         } catch (JWTCreationException ex) {
             logger.error("Cannot properly create token", ex);

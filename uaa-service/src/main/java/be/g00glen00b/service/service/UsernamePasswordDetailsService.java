@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import be.g00glen00b.service.data.Role;
 import be.g00glen00b.service.data.User;
-import be.g00glen00b.service.data.UserRepository;
 import be.g00glen00b.service.model.TokenUserDetails;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,18 +27,19 @@ public class UsernamePasswordDetailsService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        logger.debug("Trying to authenticate ", username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        logger.debug("Trying to authenticate ", email);
         try {
-            return getUserDetails(userService.findByUsername(username));
+            return getUserDetails(userService.findByEmail(email));
         } catch (UserNotFoundException ex) {
-            throw new UsernameNotFoundException("Username '" + username + "' not found", ex);
+            throw new UsernameNotFoundException("Account for '" + email + "' not found", ex);
         }
     }
 
     private TokenUserDetails getUserDetails(User user) {
         return new TokenUserDetails(
             user.getEmail(),
+            user.getUsername(),
             user.getPassword(),
             tokenService.encode(user),
             user.isEnabled(),

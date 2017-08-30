@@ -10,7 +10,7 @@ public class UserService {
         if (SecurityContextHolder.getContext() != null &&
             SecurityContextHolder.getContext().getAuthentication() != null &&
             SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof TokenUserDetails) {
-            return ((TokenUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+            return ((TokenUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getProfileName();
         } else {
             return null;
         }
