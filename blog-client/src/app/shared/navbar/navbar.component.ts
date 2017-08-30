@@ -6,7 +6,9 @@ import {AppState} from '../app-state';
 import {ProfileService} from '../../profiles/profile.service';
 import {Profile} from '../../profiles/model/profile';
 import 'rxjs/add/operator/switchMap';
-import 'rxjs/add/operator/filter';
+import 'rxjs/add/observable/of';
+import {Observable} from 'rxjs/Observable';
+import {Authentication} from "app/authentication/authentication";
 
 @Component({
   selector: 'app-navbar',
@@ -18,9 +20,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit() {
     this._store.select(state => state.auth)
-      .filter(authentication => authentication.claims != null)
-      .switchMap(authentication => this._profileService.findMe())
-      .subscribe(profile => this.profile = profile);
+      .switchMap(authentication => this.getProfile(authentication))
+      .subscribe(profile => {console.log(profile); this.profile = profile; });
   }
 
   logout() {
@@ -29,4 +30,11 @@ export class NavbarComponent implements OnInit {
     event.preventDefault();
   }
 
+  getProfile(auth: Authentication): Observable<Profile> {
+    if (auth.claims == null) {
+      return Observable.of(null);
+    } else {
+      return this._profileService.findMe();
+    }
+  }
 }

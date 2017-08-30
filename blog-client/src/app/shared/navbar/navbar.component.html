@@ -21,7 +21,7 @@
         <a href="" clrDropdownItem (click)="logout($event)">Log out</a>
       </div>
     </clr-dropdown>
-    <a [routerLink]="['/login']" class="nav-link nav-icon" title="Login" *ngIf="authentication?.claims == null">
+    <a [routerLink]="['/login']" class="nav-link nav-icon" title="Login" *ngIf="profile == null">
       <clr-icon shape="login"></clr-icon>
     </a>
   </div>
