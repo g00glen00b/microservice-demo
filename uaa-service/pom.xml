@@ -9,7 +9,7 @@
     <packaging>jar</packaging>
 
     <name>uaa-service</name>
-    <description>Demo project for Spring Boot</description>
+    <description>User Account and Authentication microservice</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
