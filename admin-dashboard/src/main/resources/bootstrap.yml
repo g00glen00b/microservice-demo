@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: admin-dashboard
+  cloud:
+    config:
+      uri: http://localhost:8000
+---
+spring:
+  profiles:
+    active: container
+  cloud:
+    config:
+      uri: http://${CONFIG_HOST:localhost}:${CONFIG_PORT:8000}
