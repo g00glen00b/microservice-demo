@@ -1,4 +1,4 @@
-FROM java:8
+FROM openjdk:8u141
 ADD config-service.jar app.jar
 ADD wrapper.sh wrapper.sh
 RUN bash -c 'chmod +x /wrapper.sh'

@@ -1,4 +1,4 @@
-version: '3'
+version: '3.1'
 
 services:
   uaa-database:
@@ -33,7 +33,7 @@ services:
       - ZOOKEEPER_PORT=2181
       - KAFKA_HOST=kafka
       - KAFKA_PORT=9092
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   registration-database:
     image: mysql:latest
     environment:
@@ -48,7 +48,7 @@ services:
     ports:
       - 8006:8006
     environment:
-      - DATABASE_HOST=uaa-database
+      - DATABASE_HOST=registration-database
       - DATABASE_USER=dbuser
       - DATABASE_PASSWORD=dbp4ss
       - DATABASE_NAME=registration
@@ -59,11 +59,14 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container,container-db,container-stream
+      - MAIL_CONFIGURATION=/run/secrets/mail-configuration
       - ZOOKEEPER_HOST=kafka
       - ZOOKEEPER_PORT=2181
       - KAFKA_HOST=kafka
       - KAFKA_PORT=9092
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
+    secrets:
+      - mail-configuration
   profile-database:
     image: mysql:latest
     environment:
@@ -93,7 +96,7 @@ services:
       - KAFKA_HOST=kafka
       - KAFKA_PORT=9092
       - SPRING_PROFILES_ACTIVE=container,container-db,container-stream
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   blog-database:
     image: mysql:latest
     environment:
@@ -119,7 +122,7 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container,container-db
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   config-service:
     image: g00glen00b/config-service:latest
     ports:
@@ -128,7 +131,7 @@ services:
       - SERVER_PORT=8000
       - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/g00glen00b/microservice-demo-config.git # Lazy fix for SSH issues in container
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   discovery-service:
     image: g00glen00b/discovery-service:latest
     ports:
@@ -138,7 +141,7 @@ services:
       - CONFIG_HOST=config-service
       - CONFIG_PORT=8000
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   gateway-service:
     image: g00glen00b/gateway-service:latest
     ports:
@@ -150,7 +153,19 @@ services:
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
-      - JAVA_OPTIONS=-Xms32m -Xmx128m
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
+  admin-dashboard:
+    image: g00glen00b/admin-dashboard:latest
+    ports:
+      - 8007:8007
+    environment:
+      - SERVER_PORT=8007
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container
+      - JAVA_OPTIONS=-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1 -XshowSettings:vm -version
   kafka:
     image: spotify/kafka
     ports:
@@ -161,3 +176,6 @@ services:
       JMX_PORT: 7209
       ADVERTISED_HOST: localhost
       ADVERTISED_PORT: 9092
+secrets:
+   mail-configuration:
+     file: mail-configuration.properties
