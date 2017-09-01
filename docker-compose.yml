@@ -28,7 +28,41 @@ services:
       - SECURITY_TOKEN_MAX_AGE_SECONDS=604800
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
-      - SPRING_PROFILES_ACTIVE=container,container-db
+      - SPRING_PROFILES_ACTIVE=container,container-db,container-stream
+      - ZOOKEEPER_HOST=kafka
+      - ZOOKEEPER_PORT=2181
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+      - JAVA_OPTIONS=-Xms32m -Xmx128m
+  registration-database:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=p4SSW0rd
+      - MYSQL_DATABASE=registration
+      - MYSQL_USER=dbuser
+      - MYSQL_PASSWORD=dbp4ss
+  registration-service:
+    image: g00glen00b/registration-service:latest
+    depends_on:
+      - registration-database
+    ports:
+      - 8006:8006
+    environment:
+      - DATABASE_HOST=uaa-database
+      - DATABASE_USER=dbuser
+      - DATABASE_PASSWORD=dbp4ss
+      - DATABASE_NAME=registration
+      - DATABASE_PORT=3306
+      - CONFIG_HOST=config-service
+      - CONFIG_PORT=8000
+      - SERVER_PORT=8007
+      - DISCOVERY_HOST=discovery-service
+      - DISCOVERY_PORT=8001
+      - SPRING_PROFILES_ACTIVE=container,container-db,container-stream
+      - ZOOKEEPER_HOST=kafka
+      - ZOOKEEPER_PORT=2181
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
       - JAVA_OPTIONS=-Xms32m -Xmx128m
   profile-database:
     image: mysql:latest
@@ -54,7 +88,11 @@ services:
       - SERVER_PORT=8004
       - DISCOVERY_HOST=discovery-service
       - DISCOVERY_PORT=8001
-      - SPRING_PROFILES_ACTIVE=container,container-db
+      - ZOOKEEPER_HOST=kafka
+      - ZOOKEEPER_PORT=2181
+      - KAFKA_HOST=kafka
+      - KAFKA_PORT=9092
+      - SPRING_PROFILES_ACTIVE=container,container-db,container-stream
       - JAVA_OPTIONS=-Xms32m -Xmx128m
   blog-database:
     image: mysql:latest
@@ -113,3 +151,13 @@ services:
       - DISCOVERY_PORT=8001
       - SPRING_PROFILES_ACTIVE=container
       - JAVA_OPTIONS=-Xms32m -Xmx128m
+  kafka:
+    image: spotify/kafka
+    ports:
+      - 2181:2181
+      - 9092:9092
+      - 7209:7209
+    environment:
+      JMX_PORT: 7209
+      ADVERTISED_HOST: localhost
+      ADVERTISED_PORT: 9092
