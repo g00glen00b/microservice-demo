@@ -4,5 +4,5 @@ CREATE TABLE state (
   username    VARCHAR(32) UNIQUE NOT NULL,
   profile     BIT(1) NOT NULL,
   uaa         BIT(1) NOT NULL,
-  created     TIMESTAMP DEFAULT current_timestamp,
+  created     DATETIME DEFAULT current_timestamp,
   PRIMARY KEY(id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;

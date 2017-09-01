@@ -4,5 +4,5 @@ CREATE TABLE IF NOT EXISTS article (
   text               VARCHAR(16384),
   username           VARCHAR(32) NOT NULL,
   slug               VARCHAR(64) NOT NULL UNIQUE,
-  created            TIMESTAMP DEFAULT current_timestamp,
+  created            DATETIME DEFAULT current_timestamp,
   PRIMARY KEY (id)) ENGINE=InnoDB DEFAULT CHARSET=latin1;
