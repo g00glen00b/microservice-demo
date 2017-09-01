@@ -1,5 +1,4 @@
 spring:
-  boot.admin.url: http://localhost:8007
   jackson:
     serialization:
       indent_output: true
