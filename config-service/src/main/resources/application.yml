@@ -15,3 +15,10 @@ eureka:
       defaultZone: http://localhost:8001/eureka/
 server:
   port: 8000
+---
+spring:
+  profiles: container
+eureka:
+  client:
+    service-url:
+      defaultZone: http://${DISCOVERY_HOST}:${DISCOVERY_PORT:8001}/eureka/
