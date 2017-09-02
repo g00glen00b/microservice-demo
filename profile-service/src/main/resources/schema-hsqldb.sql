@@ -1,6 +1,5 @@
 CREATE TABLE IF NOT EXISTS profile (
   username          VARCHAR(32) NOT NULL PRIMARY KEY,
-  email             VARCHAR(128) UNIQUE NOT NULL,
   firstname         VARCHAR(16),
   lastname          VARCHAR(16),
   bio               VARCHAR(256));
