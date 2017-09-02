@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.stream.annotation.EnableBinding;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 
@@ -19,7 +20,8 @@ public class RegistrationServiceApplication {
     }
 
     @ConditionalOnProperty("mail.configuration")
-    @PropertySource(value = "file:${mail.configuration}", ignoreResourceNotFound = true)
+    @PropertySource(value = "file:${mail.configuration}")
+    @Configuration
     public static class RegistrationServiceSecretConfiguration {
 
     }
