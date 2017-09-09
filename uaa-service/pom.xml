@@ -92,6 +92,12 @@
             <artifactId>java-jwt</artifactId>
             <version>3.1.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>be.g00glen00b.service</groupId>
+            <artifactId>monitor-starter</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
