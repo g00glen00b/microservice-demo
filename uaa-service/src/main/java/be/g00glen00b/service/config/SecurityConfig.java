@@ -74,7 +74,7 @@ public class SecurityConfig {
                 .mvcMatchers(HttpMethod.POST, "/api/user").anonymous()
                 .anyRequest().authenticated()
                 .and()
-                .addFilterBefore(filter(), RequestHeaderAuthenticationFilter.class)
+                .addFilterBefore(authFilter(), RequestHeaderAuthenticationFilter.class)
                 .authenticationProvider(preAuthProvider())
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -83,7 +83,7 @@ public class SecurityConfig {
         }
 
         @Bean
-        public TokenAuthenticationFilter filter() {
+        public TokenAuthenticationFilter authFilter() {
             return new TokenAuthenticationFilter();
         }
 
