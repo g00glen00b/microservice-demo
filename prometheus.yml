@@ -1,0 +1,10 @@
+scrape_configs:
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
+  - job_name: 'microservice-uaa'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8002']
