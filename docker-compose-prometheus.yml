@@ -20,7 +20,7 @@ services:
     - ./prometheus.yml:/etc/prometheus/prometheus.yml
     - prometheus_data:/prometheus
     command:
-    - -config.file=/etc/prometheus/prometheus.yml
+    - --config.file=/etc/prometheus/prometheus.yml
 volumes:
   prometheus_data: {}
   grafana_data: {}
