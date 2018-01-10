@@ -36,7 +36,7 @@ public class MonitorAutoConfiguration {
     }
 
     @Bean
-    public MonitoringFilter filter(CounterService counterService, GaugeService gaugeService) {
-        return new MonitoringFilter(counterService, gaugeService);
+    public MonitoringFilter filter(CounterService counterService, GaugeService gaugeService, MonitoringProperties monitoringProperties) {
+        return new MonitoringFilter(counterService, gaugeService, monitoringProperties);
     }
 }

@@ -9,12 +9,31 @@ spring:
           uri: git@github.com:g00glen00b/microservice-demo-config.git
           searchPaths: '{application}'
           timeout: 15
+  metrics:
+    servo:
+      enabled: false
 eureka:
   client:
     service-url:
       defaultZone: http://localhost:8001/eureka/
 server:
   port: 8000
+monitoring:
+  path: /prometheus
+  interval: 10000
+  matchers:
+    - name: api.config
+      method: GET
+      matcher: /*/*
+    - name: metrics
+      method: GET
+      matcher: /metrics
+    - name: prometheus
+      method: GET
+      matcher: /prometheus
+management:
+  security:
+    enabled: false
 ---
 spring:
   profiles: container

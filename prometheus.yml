@@ -3,8 +3,43 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets: ['localhost:9090']
-  - job_name: 'microservice-uaa'
+  - job_name: 'config-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8000']
+  - job_name: 'discovery-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8001']
+  - job_name: 'uaa-service'
     scrape_interval: 10s
     metrics_path: '/prometheus'
     static_configs:
       - targets: ['192.168.0.114:8002']
+  - job_name: 'blog-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8003']
+  - job_name: 'profile-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8004']
+  - job_name: 'gateway-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8005']
+  - job_name: 'registration-service'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8006']
+  - job_name: 'admin-dashboard'
+    scrape_interval: 10s
+    metrics_path: '/prometheus'
+    static_configs:
+      - targets: ['192.168.0.114:8007']

@@ -16,6 +16,18 @@ export class AuthenticationService {
   constructor(private _store: Store<Authentication>, private _http: Http) {
   }
 
+  isAuthenticated(): Observable<boolean> {
+    return null;
+  }
+
+  getUser(): Observable<string> {
+    return null;
+  }
+
+  getToken(): Observable<string> {
+    return null;
+  }
+
   login(email: string, password: string, rememberMe: boolean): Observable<string> {
     let headers = new Headers();
     headers.append('Authorization', 'Basic ' + btoa(email + ':' + password));

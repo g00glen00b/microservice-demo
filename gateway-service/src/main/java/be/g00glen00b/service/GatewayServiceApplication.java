@@ -46,7 +46,7 @@ public class GatewayServiceApplication {
                 boolean methodMatches = Arrays.stream(SUPPORTED_MULTIPART_METHODS)
                     .anyMatch(method -> method.matches(request.getMethod()));
                 String contentType = request.getContentType();
-                return methodMatches && (contentType != null &&contentType.toLowerCase().startsWith("multipart/"));
+                return methodMatches && (contentType != null && contentType.toLowerCase().startsWith("multipart/"));
             }
         };
     }
